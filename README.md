@@ -36,8 +36,8 @@ REACT_APP_AUTH0_DOMAIN=socialley.jp.auth0.com
 REACT_APP_AUTH0_CLIENT_ID="request-client-id-to-the-maintainers"
 ```
 
-### **Contributing to Socialley** 
-**Socialley** is truly Open Source. Any sort of contribution to this project are highly appreciated 💖. Please refer the [contributing guide](./CONTRIBUTING.md) for more insights upon contributing to **Socialley**.
+### **Contributing to Socialley** 🚀
+**Socialley** is truly Open Source. Any sort of contribution to this project are highly appreciated 💖 Please refer the [contributing guide](./CONTRIBUTING.md) for more insights upon how to contribute to **Socialley**.
 
 ## **License** 
 
