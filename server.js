@@ -20,16 +20,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
-const user = require("./server/routes/user.router");
-app.use("/user", user);
-
-app.get("/", (req, res) => {
-  res.send({ success: true });
-});
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+    app.use(express.static("client/build"));
 }
+
+const user = require("./server/routes/user.router");
+app.use("/user", user);
 
 io.on("connection", (socket) => {
   console.log("connected");
