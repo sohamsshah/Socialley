@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LandingPageBanner from "./landing-page.jpg";
 // import { LandingPageBanner } from ".../images/landing-page.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 export const LandingPage = () => {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const navigate = useNavigate();
+  console.log(isAuthenticated);
+
+  useEffect(() => {
+    console.log(isAuthenticated);
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -25,7 +35,13 @@ export const LandingPage = () => {
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded text-2xl"
             onClick={() => loginWithRedirect()}
           >
-            SignIn
+            Sign In
+          </button>
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded text-2xl"
+            onClick={() => logout()}
+          >
+            Logout
           </button>
         </div>
       </div>
