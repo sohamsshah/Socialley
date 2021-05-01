@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Valley for valuable socialization",
   "main": "server.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "build": "cd client && npm run build",
     "install-client": "cd client && npm install",
@@ -28,6 +31,5 @@
     "lodash": "^4.17.21",
     "mongoose": "^5.12.7",
     "socket.io": "^4.0.1"
-  },
-  "proxy": "http://localhost:8080"
+  }
 }
