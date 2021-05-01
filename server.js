@@ -21,13 +21,13 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
 
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
-    app.get('/*', function (req, res) {
-        res.sendFile(path.join(__dirname, 'build', 'index.html'));
-      });
-}
+app.get("/", (req,res) => {
+    res.send({success:true, page:"home"})
+})
 
+app.get("/room", (req,res) => {
+    res.send({success:true, page:"home"})
+})
 const user = require("./server/routes/user.router");
 app.use("/user", user);
 
