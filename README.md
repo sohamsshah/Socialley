@@ -44,3 +44,8 @@ REACT_APP_AUTH0_CLIENT_ID="request-client-id-to-the-maintainers"
 This project is licensed under the terms of the
 [MPL-2.0](/LICENSE)
 
+## Developed with 💖 by **Team Axios** 💻:
+* [Rohit Dhatrak](https://github.com/RohitDhatrak)
+* [Prerana Nawar](https://github.com/prerana1821)
+* [Soham Shah](https://github.com/sohamsshah)
+
