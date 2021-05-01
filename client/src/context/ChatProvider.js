@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import { chatReducer } from "./chatReducer";
+import { chatReducer } from "../reducer";
 
 export const ChatContext = createContext();
 

@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import { roomReducer } from "./roomReducer";
+import { roomReducer } from "../reducer";
 
 export const RoomContext = createContext();
 
