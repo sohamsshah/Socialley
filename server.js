@@ -23,9 +23,9 @@ app.use(cors());
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
-    // app.get('*', (req, res) => {
-    //     res.sendFile(path.join(__dirname, 'client/build/public', 'index.html'));
-    // });
+    app.get('/*', function (req, res) {
+        res.sendFile(path.join(__dirname, 'build', 'index.html'));
+      });
 }
 
 const user = require("./server/routes/user.router");
