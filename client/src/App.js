@@ -1,14 +1,14 @@
-import "./App.css";
-import { LandingPage } from "./pages/LandingPage/";
-import Auth0ProviderWithHistory from "./auth/auth0Provider";
+import { LandingPage, HomePage } from "./pages";
+import { Routes, Route } from "react-router-dom";
+import { PrivateRoute } from "./PrivateRoute";
 
 function App() {
   return (
     <div className="App">
-      {/* <h1 className="text-red-500">Hello World! I am Socialley.</h1> */}
-      <Auth0ProviderWithHistory>
-        <LandingPage />
-      </Auth0ProviderWithHistory>
+      <Routes>
+        <PrivateRoute path="/" element={<HomePage />} />
+        <Route path="/login" element={<LandingPage />} />
+      </Routes>
     </div>
   );
 }
