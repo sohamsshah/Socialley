@@ -8,6 +8,8 @@ function App() {
     transports: ["websocket"],
   });
 
+  console.log(socket);
+
   return (
     <div className="App">
       <Routes>

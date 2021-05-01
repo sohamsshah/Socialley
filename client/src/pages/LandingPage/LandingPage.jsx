@@ -2,13 +2,26 @@ import React, { useEffect } from "react";
 import LandingPageBanner from "./landing-page.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const LandingPage = () => {
-  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
   const navigate = useNavigate();
+
+  console.log(user);
 
   useEffect(() => {
     if (isAuthenticated) {
+      (async () => {
+        const response = await axios.post("http://localhost:8080/user", {
+          newUser: {
+            email: user.email,
+            username: user.nickname,
+            profilePic: user.picture,
+          },
+        });
+        console.log(response);
+      })();
       navigate("/home");
     }
   }, [isAuthenticated]);
