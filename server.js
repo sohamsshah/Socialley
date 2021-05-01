@@ -9,6 +9,11 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+// db init
+
+const { initializeDBConnection } = require("./db/db.connect");
+initializeDBConnection();
+
 // Data parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
