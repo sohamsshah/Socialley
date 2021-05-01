@@ -1,7 +1,7 @@
 {
-  "name": "developerden",
+  "name": "socialley",
   "version": "1.0.0",
-  "description": "Clubhouse for devs",
+  "description": "Valley for valuable socialization",
   "main": "server.js",
   "scripts": {
     "build": "cd client && npm run build",
