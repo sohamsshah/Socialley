@@ -1,18 +1,15 @@
 import React, { useEffect } from "react";
 import LandingPageBanner from "./landing-page.jpg";
-// import { LandingPageBanner } from ".../images/landing-page.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
 export const LandingPage = () => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
-  console.log(isAuthenticated);
 
   useEffect(() => {
-    console.log(isAuthenticated);
     if (isAuthenticated) {
-      navigate("/");
+      navigate("/home");
     }
   }, [isAuthenticated]);
 
