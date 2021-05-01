@@ -20,11 +20,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@auth0/auth0-react": "github:auth0/auth0-react",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "socket-io": "^1.0.0"
+    "lodash": "^4.17.21",
+    "socket.io": "^4.0.1"
   },
   "proxy": "http://localhost:8080"
 }
