@@ -5,7 +5,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { RoomPage } from "./pages/RoomPage/RoomPage";
 
 function App() {
-  const socket = io.connect("https://socialley.herokuapp.com/", {
+  const socket = io.connect("https://Socialley.sohamsshah.repl.co/", {
     transports: ["websocket"],
   });
 
