@@ -1,5 +1,9 @@
 import React from "react";
 
 export function HomePage() {
-  return <div></div>;
+  return (
+    <div>
+      <h1>This is the home page</h1>
+    </div>
+  );
 }

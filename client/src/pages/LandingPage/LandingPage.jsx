@@ -6,12 +6,10 @@ import { useNavigate } from "react-router-dom";
 export const LandingPage = () => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
-  console.log(isAuthenticated);
 
   useEffect(() => {
-    console.log(isAuthenticated);
     if (isAuthenticated) {
-      navigate("/");
+      navigate("/home");
     }
   }, [isAuthenticated]);
 
