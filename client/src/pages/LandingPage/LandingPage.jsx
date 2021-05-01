@@ -47,12 +47,6 @@ export const LandingPage = () => {
           >
             Sign In
           </button>
-          <button
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded text-2xl"
-            onClick={() => logout()}
-          >
-            Logout
-          </button>
         </div>
       </div>
       <footer className="flex flex-col lg:flex-row justify-center lg:py-4 items-center  lg:gap-6 ">
