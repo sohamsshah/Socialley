@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import { userReducer } from "./userReducer";
+import { userReducer } from "../reducer";
 
 export const UserContext = createContext();
 
