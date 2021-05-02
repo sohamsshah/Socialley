@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styles from "./RoomPage.module.css";
 import { useRoom } from "../../context/RoomProvider";
 import { useUser } from "../../context/UserProvider";
@@ -57,6 +57,7 @@ export function RoomPage() {
   }, []);
 
   console.log({ roomState });
+  console.log({ userState });
 
   useEffect(() => {
     (async function () {
@@ -110,11 +111,22 @@ export function RoomPage() {
       )}
       <div className={styles.header}>
         <div className={styles["header-lhs"]}>
-          <BackArrowSvg />
+          <Link to="/home">
+            <BackArrowSvg />
+          </Link>
           <span className={styles["room-title"]}>{roomState.topic}</span>
         </div>
         <div className={styles["header-rhs"]}>
-          <RaiseHandSvg />
+          <button className={styles["btn-raise-hand"]}>
+            <RaiseHandSvg />
+            {/* {roomState.moderators.find((item) =>
+              item._id === userState._id ? (
+                <span className={styles["badge-raise-hand"]}></span>
+              ) : (
+                <div></div>
+              )
+            )} */}
+          </button>
           <button onClick={() => setShowParticipants(!showParticipants)}>
             <ParticipantsSvg />
           </button>

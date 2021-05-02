@@ -25,7 +25,9 @@ router.route("/").post(async (req, res) => {
       .execPopulate();
     console.log(populatedUser);
     if (user) {
-      res.status(200).json({ user: { ...user, savedchats: populatedUser } });
+      res
+        .status(200)
+        .json({ user: { ...user._doc, savedchats: populatedUser._doc } });
     } else {
       const newUserFromDB = new User(newUser);
       const savedUser = await newUserFromDB.save();
