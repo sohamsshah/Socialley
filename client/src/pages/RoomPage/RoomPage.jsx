@@ -47,11 +47,9 @@ export function RoomPage() {
             },
           }
         );
-        if (response.status === 200) {
-          const savedRoom = response.data.room;
-          socket.emit("joinRoom", { userId: userState._id, roomId });
-          roomDispatch({ type: "ADD_ROOM", payload: savedRoom });
-        }
+        const savedRoom = response.data.room;
+        socket.emit("joinRoom", { userId: userState._id, roomId });
+        roomDispatch({ type: "ADD_ROOM", payload: savedRoom });
       } catch (error) {
         console.log(error);
       }
@@ -63,18 +61,14 @@ export function RoomPage() {
   useEffect(() => {
     (async function () {
       try {
-        const { status, room } = await axios.get(
-          `http://localhost:8080/room/${roomId}`
-        );
-        console.log(room);
-        if (status === 2000) {
-          roomDispatch({ type: "ADD_ROOM", payload: room });
-        }
+        const {
+          data: { room },
+        } = await axios.get(`http://localhost:8080/room/${roomId}`);
+        roomDispatch({ type: "ADD_ROOM", payload: room });
       } catch (error) {
         console.log({ error });
       }
     })();
-
     socket.on("message", ({ message }) => {
       console.log(message);
       roomDispatch({ type: "ADD_MESSAGE", payload: message });

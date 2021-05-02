@@ -35,19 +35,9 @@ router
     }
   })
   .post(async (req, res) => {
-    const { topic, description, visibility, user } = req.body;
-    // const {
-    //   newRoom: { topic, description, visibility, user },
-    // } = req.body;
+    const { newRoom } = req.body;
     try {
-      const newRoomFromDB = new Room({
-        topic,
-        description,
-        visibility,
-        isSaved: false,
-        canRaiseHand: true,
-        moderators: [user],
-      });
+      const newRoomFromDB = new Room(newRoom);
       await newRoomFromDB.save();
       res
         .status(200)
