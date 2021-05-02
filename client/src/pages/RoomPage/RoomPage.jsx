@@ -87,6 +87,9 @@ export function RoomPage() {
         roomDispatch({ type: "ADD_MESSAGE", payload: message });
       }
     });
+    socket.on("raiseHand", ({ room }) => {
+      roomDispatch({ type: "ADD_ROOM", payload: room });
+    });
   }, []);
 
   async function sendMessage() {
@@ -131,6 +134,51 @@ export function RoomPage() {
     (item) => item._id === userState._id
   );
 
+  const hasRaisedHand = roomState.raisedHand.some(
+    (item) => item._id === userState._id
+  );
+
+  async function raiseHand() {
+    console.log("here");
+    if (participant || hasRaisedHand) {
+      try {
+        const newParticipants = roomState.participants.filter(
+          (user) => user._id !== userState._id
+        );
+        const removeRaisedHand = roomState.raisedHand.filter(
+          (user) => user._id !== userState._id
+        );
+        const isPresent = roomState.raisedHand.some(
+          (user) => user._id === userState._id
+        );
+
+        const {
+          data: { room },
+        } = await axios.post(
+          `https://socialley.sohamsshah.repl.co/room/${roomId}`,
+          {
+            roomUpdates: {
+              participants: !isPresent
+                ? newParticipants
+                : [...roomState.participants, userState],
+              raisedHand: !isPresent
+                ? [...roomState.raisedHand, userState]
+                : removeRaisedHand,
+            },
+          }
+        );
+        console.log("here");
+        socket.emit("raiseHand", { room });
+      } catch (error) {
+        console.log({ error });
+      }
+    } else if (mod && roomState.raisedHand.length) {
+      setShowRaisedHand(!showRaisedHand);
+    }
+  }
+
+  console.log(roomState);
+
   return (
     <div>
       {showParticipants && (
@@ -151,27 +199,13 @@ export function RoomPage() {
               <ExitFromStage />
             </button>
           ) : (
-            <button
-              className={styles["btn-raise-hand"]}
-              onClick={() => setShowRaisedHand(!showRaisedHand)}
-              // if user is participant
-              // onClick={participant ? () => addUserToRaisedHand() : () => {}}
-              // if user is a moderator (to see raised hands)
-              // onClick={mod && roomState.raisedHand ? () => setShowRaisedHand(!showRaisedHand) : () => {}}
-            >
+            <button className={styles["btn-raise-hand"]} onClick={raiseHand}>
               <RaiseHandSvg />
-              {mod ? (
-                <span className={styles["badge-raise-hand"]}>
-                  {roomState.raisedHand.length}
-                </span>
+              {mod && roomState.raisedHand ? (
+                <span className={styles["badge-raise-hand"]}>6</span>
               ) : (
                 <div></div>
               )}
-              {/* {mod && roomState.raisedHand ? (
-              <span className={styles["badge-raise-hand"]}>6</span>
-            ) : (
-              <div></div>
-            )} */}
             </button>
           )}
           <button onClick={() => setShowParticipants(!showParticipants)}>
