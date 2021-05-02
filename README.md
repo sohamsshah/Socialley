@@ -1,6 +1,6 @@
 # Socialley 💬
 
-A Discussion Alley for the smart socializing.
+A Discussion Alley for smart socializing.
 
 ## LIVE SITE: https://socialley.netlify.app/
 
