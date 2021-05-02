@@ -10,8 +10,10 @@ import {
   RaiseHandSvg,
   ParticipantsSvg,
   SendSvg,
+  ExitFromStage,
 } from "../../assets/Svg";
 import { Participants } from "../../components/Participants/Participants";
+import { RaisedHands } from "../../components/RaisedHands/RaisedHands";
 
 const socket = io.connect("http://localhost:8080", {
   transports: ["websocket"],
@@ -24,6 +26,7 @@ export function RoomPage() {
   const { userState } = useUser();
   const [text, setText] = useState("");
   const [showParticipants, setShowParticipants] = useState(false);
+  const [showRaisedHand, setShowRaisedHand] = useState(false);
   const scroll = useRef();
 
   useEffect(() => {
@@ -104,11 +107,25 @@ export function RoomPage() {
     }
   }
 
+  const mod = roomState.moderators.some((item) => item._id === userState._id);
+  console.log(mod);
+
+  const participant = roomState.participants.some(
+    (item) => item._id === userState._id
+  );
+  console.log(participant);
+
+  const userInStage = roomState.stage.some(
+    (item) => item._id === userState._id
+  );
+  console.log(userInStage);
+
   return (
     <div>
       {showParticipants && (
         <Participants setShowParticipants={setShowParticipants} />
       )}
+      {showRaisedHand && <RaisedHands setShowRaisedHand={setShowRaisedHand} />}
       <div className={styles.header}>
         <div className={styles["header-lhs"]}>
           <Link to="/home">
@@ -117,16 +134,35 @@ export function RoomPage() {
           <span className={styles["room-title"]}>{roomState.topic}</span>
         </div>
         <div className={styles["header-rhs"]}>
-          <button className={styles["btn-raise-hand"]}>
-            <RaiseHandSvg />
-            {/* {roomState.moderators.find((item) =>
-              item._id === userState._id ? (
-                <span className={styles["badge-raise-hand"]}></span>
+          {userInStage ? (
+            // if the user is in stage
+            <button onClick={() => {}}>
+              <ExitFromStage />
+            </button>
+          ) : (
+            <button
+              className={styles["btn-raise-hand"]}
+              onClick={() => setShowRaisedHand(!showRaisedHand)}
+              // if user is participant
+              // onClick={participant ? () => addUserToRaisedHand() : () => {}}
+              // if user is a moderator (to see raised hands)
+              // onClick={mod && roomState.raisedHand ? () => setShowRaisedHand(!showRaisedHand) : () => {}}
+            >
+              <RaiseHandSvg />
+              {mod ? (
+                <span className={styles["badge-raise-hand"]}>
+                  {roomState.raisedHand.length}
+                </span>
               ) : (
                 <div></div>
-              )
+              )}
+              {/* {mod && roomState.raisedHand ? (
+              <span className={styles["badge-raise-hand"]}>6</span>
+            ) : (
+              <div></div>
             )} */}
-          </button>
+            </button>
+          )}
           <button onClick={() => setShowParticipants(!showParticipants)}>
             <ParticipantsSvg />
           </button>
