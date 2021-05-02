@@ -15,6 +15,10 @@
   align-items: center;
 }
 
+.back-btn{
+  cursor:pointer;
+}
+
 .header-rhs {
   display: flex;
 }

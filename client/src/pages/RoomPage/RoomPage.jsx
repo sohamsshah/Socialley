@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./RoomPage.module.css";
 import { useRoom } from "../../context/RoomProvider";
 import { useUser } from "../../context/UserProvider";
@@ -15,13 +15,17 @@ import {
 import { Participants } from "../../components/Participants/Participants";
 import { RaisedHands } from "../../components/RaisedHands/RaisedHands";
 
-const socket = io.connect("http://localhost:8080", {
+const socket = io.connect("https://socialley.sohamsshah.repl.co/", {
   transports: ["websocket"],
 });
 
 export function RoomPage() {
   let textAreaRef = useRef(null);
   const { roomId } = useParams();
+  const navigate = useNavigate();
+  const goToPreviousPath = () => {
+    navigate("/home");
+  };
   const { roomState, roomDispatch } = useRoom();
   const { userState } = useUser();
   const [text, setText] = useState("");
@@ -40,7 +44,7 @@ export function RoomPage() {
     (async () => {
       try {
         const response = await axios.post(
-          `http://localhost:8080/room/${roomId}`,
+          `https://socialley.sohamsshah.repl.co/room/${roomId}`,
           {
             roomUpdates: {
               participants: [
@@ -59,15 +63,14 @@ export function RoomPage() {
     })();
   }, []);
 
-  console.log({ roomState });
-  console.log({ userState });
-
   useEffect(() => {
     (async function () {
       try {
         const {
           data: { room },
-        } = await axios.get(`http://localhost:8080/room/${roomId}`);
+        } = await axios.get(
+          `https://socialley.sohamsshah.repl.co/room/${roomId}`
+        );
         roomDispatch({ type: "ADD_ROOM", payload: room });
       } catch (error) {
         console.log({ error });
@@ -86,9 +89,12 @@ export function RoomPage() {
       time: Date.now(),
     };
     try {
-      const res = await axios.post(`http://localhost:8080/room/${roomId}`, {
-        roomUpdates: { chat: [...roomState.chat, message] },
-      });
+      const res = await axios.post(
+        `https://socialley.sohamsshah.repl.co/room/${roomId}`,
+        {
+          roomUpdates: { chat: [...roomState.chat, message] },
+        }
+      );
       if (res.status === 200) {
         socket.emit("message", { roomId, message });
       }
@@ -102,7 +108,9 @@ export function RoomPage() {
   function sendMessageOnEnter(e) {
     if (e.code === "Enter" && text !== "") {
       e.preventDefault();
-      scroll.current.scrollIntoView({ behavior: "smooth" });
+      if (scroll?.current) {
+        scroll.current.scrollIntoView({ behavior: "smooth" });
+      }
       sendMessage();
     }
   }
@@ -128,9 +136,9 @@ export function RoomPage() {
       {showRaisedHand && <RaisedHands setShowRaisedHand={setShowRaisedHand} />}
       <div className={styles.header}>
         <div className={styles["header-lhs"]}>
-          <Link to="/home">
+          <div className={styles["back-btn"]} onClick={goToPreviousPath}>
             <BackArrowSvg />
-          </Link>
+          </div>
           <span className={styles["room-title"]}>{roomState.topic}</span>
         </div>
         <div className={styles["header-rhs"]}>
@@ -169,20 +177,20 @@ export function RoomPage() {
         </div>
       </div>
       <div className={styles["chat-container"]}>
-        {roomState.chat.map((message) => (
-          <div
-            className={
-              message.userId === userState._id
-                ? styles["chat-user"]
-                : styles["chat-others"]
-            }
-          >
-            <div className={styles["chat-name"]}>Jonh Doe</div>
-            <div className={styles["chat-message"]}>{message.message}</div>
-            <div className={styles["chat-time"]}>12:34pm</div>
-          </div>
-        ))}
-        <div ref={scroll}></div>
+        {roomState.chat &&
+          roomState.chat.map((message) => (
+            <div
+              className={
+                message.userId === userState._id
+                  ? styles["chat-user"]
+                  : styles["chat-others"]
+              }
+            >
+              <div className={styles["chat-name"]}>Jonh Doe</div>
+              <div className={styles["chat-message"]}>{message.message}</div>
+              <div className={styles["chat-time"]}>12:34pm</div>
+            </div>
+          ))}
       </div>
       <div className={styles.footer}>
         <textarea

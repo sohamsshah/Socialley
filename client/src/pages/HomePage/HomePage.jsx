@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { useRoom } from "../../context/RoomProvider";
 import { useUser } from "../../context/UserProvider";
@@ -13,20 +13,23 @@ import {
 } from "../../assets/Svg";
 
 export function HomePage() {
+  const navigate = useNavigate();
+  const goToPreviousPath = () => {
+    navigate("/");
+  };
   const [showModal, setShowModal] = useState(false);
   const { roomDispatch } = useRoom();
   const { userState } = useUser();
   const [topic, setTopic] = useState("");
   const [description, setDescription] = useState("");
   const [rooms, setRooms] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     (async function () {
       try {
         const {
           data: { rooms },
-        } = await axios.get("http://localhost:8080/room");
+        } = await axios.get("https://socialley.sohamsshah.repl.co/room");
         setRooms(rooms);
       } catch (error) {
         console.log({ error });
@@ -47,7 +50,7 @@ export function HomePage() {
     try {
       const {
         data: { room },
-      } = await axios.post("http://localhost:8080/room", {
+      } = await axios.post("https://socialley.sohamsshah.repl.co/room", {
         newRoom: {
           topic: topic,
           description: description,
@@ -79,63 +82,70 @@ export function HomePage() {
       <div className={styles["main-content"]}>
         <div className={styles["header"]}>
           <div className={styles["header-lhs"]}>
-            <BackArrowSvg />
+            <div className={styles["back-btn"]} onClick={goToPreviousPath}>
+              <BackArrowSvg />
+            </div>
             <span className={styles["home-title"]}>Socailley 💬</span>
           </div>
           <div className={styles["header-rhs"]}>
-            <img
-              className={styles["profile-pic"]}
-              src="https://i.pinimg.com/564x/51/f6/fb/51f6fb256629fc755b8870c801092942.jpg"
-              alt="avatar profile"
-            ></img>
+            <Link to={`/profile/${userState._id}`}>
+              {" "}
+              <img
+                className={styles["profile-pic"]}
+                src={`${userState.profilePic}`}
+                alt="avatar profile"
+              ></img>
+            </Link>
           </div>
         </div>
         <div className={styles["feed"]}>
           <div className={styles["feed-title"]}>Join Rooms</div>
           <div className={styles["rooms"]}>
             {rooms.map((room) => (
-              <Link to={`/room/${room._id}`}>
-                <div
-                  className={styles["room-card"]}
-                  key={room._id}
-                  onClick={() => joinRoom(room)}
-                >
-                  <div className={styles["room-title"]}>{room.topic}</div>
+              <div
+                className={styles["room-card"]}
+                key={room._id}
+                onClick={() => joinRoom(room)}
+              >
+                <div className={styles["room-title"]}>{room.topic}</div>
 
-                  <div className={styles["moderator"]}>
-                    <div className="flex flex-wrap -space-x-1 overflow-hidden">
-                      <div className={styles["moderator-avatar-stack"]}>
+                <div className={styles["moderator"]}>
+                  <div class="flex flex-wrap -space-x-1 overflow-hidden">
+                    <div className={styles["moderator-avatar-stack"]}>
+                      <img
+                        className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                        src={room.moderators[0]?.profilePic}
+                        alt=""
+                      ></img>
+                      {room.moderators[1]?.profilePic && (
                         <img
                           className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                          // src={room.moderators[0]?.profilePic}
+                          src={room.moderators[1]?.profilePic}
                           alt=""
                         ></img>
+                      )}
+                      {room.moderators[2]?.profilePic && (
                         <img
                           className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                          // src={room.moderators[1]?.profilePic}
+                          src={room.moderators[2]?.profilePic}
                           alt=""
                         ></img>
-                        <img
-                          className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                          // src={room.moderators[2]?.profilePic}
-                          alt=""
-                        ></img>
-                      </div>
-                    </div>
-                    <div className={styles["moderator-names"]}>
-                      {/* {`by ${room.moderators[0].username}`} */}
+                      )}
                     </div>
                   </div>
-                  <div className={styles["room-stats"]}>
-                    <div className={styles["room-participants"]}>
-                      <ParticipantsSvg /> <div>{room.participants.length}</div>
-                    </div>
-                    <div className={styles["room-chatters"]}>
-                      <PhChatCenteredDots /> <div>{room.stage.length}</div>
-                    </div>
+                  <div className={styles["moderator-names"]}>
+                    {`by ${room.moderators[0].username}`}
                   </div>
                 </div>
-              </Link>
+                <div className={styles["room-stats"]}>
+                  <div className={styles["room-participants"]}>
+                    <ParticipantsSvg /> <div>{room.participants.length}</div>
+                  </div>
+                  <div className={styles["room-chatters"]}>
+                    <PhChatCenteredDots /> <div>{room.stage.length}</div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>

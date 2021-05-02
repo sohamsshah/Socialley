@@ -14,15 +14,20 @@ export const LandingPage = () => {
     if (isAuthenticated) {
       (async () => {
         try {
-          const response = await axios.post("http://localhost:8080/user", {
-            newUser: {
-              email: user.email,
-              username: user.nickname,
-              profilePic: user.picture,
-            },
-          });
+          const response = await axios.post(
+            "https://socialley.sohamsshah.repl.co/user",
+            {
+              newUser: {
+                email: user.email,
+                username: user.nickname,
+                profilePic: user.picture,
+                bio: "Hello World! I love Socialley💻❤",
+              },
+            }
+          );
           const userFromApi = response.data.user;
           userDispatch({ type: "ADD_USER", payload: userFromApi });
+          localStorage.setItem("userId", JSON.stringify(userFromApi._id));
         } catch (error) {
           console.log(error);
         }
