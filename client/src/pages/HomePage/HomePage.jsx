@@ -1,8 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import React from "react";
+import {useUser} from "./../../context/UserProvider"
 import styles from "./HomePage.module.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useState} from "react"
 import {
   BackArrowSvg,
@@ -12,7 +13,12 @@ import {
 
 export function HomePage() {
   const { user } = useAuth0();
+  const navigate = useNavigate();
+    const goToPreviousPath = () => {
+        navigate("/")
+    }
   const [showModal, setShowModal] = useState(false);
+  const {userState: {_id, profilePic}} = useUser();
 
   const handleModalShow = () => {
       setShowModal(true);
@@ -33,11 +39,11 @@ export function HomePage() {
       <div className={styles["main-content"]}>
       <div className={styles["header"]}>
       <div className={styles["header-lhs"]}>
-          <BackArrowSvg />
+      <div className={styles["back-btn"]} onClick={goToPreviousPath} ><BackArrowSvg /></div>
           <span className={styles["home-title"]}>Socailley 💬</span>
           </div>
           <div className={styles["header-rhs"]}>
-            <img className={styles["profile-pic"]} src="https://i.pinimg.com/564x/51/f6/fb/51f6fb256629fc755b8870c801092942.jpg" alt="avatar profile"></img>
+            <Link to={`/profile/${_id}`}> <img className={styles["profile-pic"]} src={`${profilePic}`} alt="avatar profile"></img></Link>
           </div>
       </div>
       <div className={styles["feed"]}>

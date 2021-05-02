@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./RoomPage.module.css";
 import { useRoom } from "../../context/RoomProvider";
 import { useUser } from "../../context/UserProvider";
@@ -20,7 +20,10 @@ export function RoomPage() {
   let textAreaRef = useRef(null);
   const [text, setText] = useState("");
   const { roomId } = useParams();
-
+  const navigate = useNavigate();
+    const goToPreviousPath = () => {
+        navigate("/home")
+    }
   const { roomState, roomDispatch } = useRoom();
 
   const { userState } = useUser();
@@ -112,7 +115,7 @@ export function RoomPage() {
     <div>
       <div className={styles["header"]}>
         <div className={styles["header-lhs"]}>
-          <BackArrowSvg />
+        <div className={styles["back-btn"]} onClick={goToPreviousPath} ><BackArrowSvg /></div>
           <span className={styles["room-title"]}>{roomState.topic}</span>
         </div>
         <div className={styles["header-rhs"]}>

@@ -20,6 +20,10 @@
     align-items: center;
     float: left;
   }
+
+  .back-btn{
+    cursor:pointer;
+  }
   
   .header-rhs {
     display: flex;

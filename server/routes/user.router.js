@@ -19,7 +19,7 @@ router.route("/").post(async (req, res) => {
     if (user) {
       res.status(200).json({ user });
     } else {
-      const newUserFromDB = new User({ ...newUser, bio: "" });
+      const newUserFromDB = new User(newUser);
       const savedUser = await newUserFromDB.save();
       res.status(200).json({ user: savedUser });
     }
