@@ -1,0 +1,100 @@
+.header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    padding: 0.8em 1em;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #f0eded;
+    margin-bottom: 1em;
+    z-index:2;
+  }
+  
+  .header-lhs {
+    display: flex;
+    align-items: center;
+    float: left;
+    cursor:pointer
+  }
+
+  .back-btn{
+      cursor:pointer;
+  }
+  
+  .header-rhs {
+    display: flex;
+    float: right;
+  }
+  
+  .profile-title {
+    padding-left: 1em;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .profile-pic{
+    border-radius: 50%;
+    height:3rem;
+    width:3rem;
+  }
+
+  .profile-details-banner{
+      position: relative;
+      display:flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      margin:2em;
+      border:solid 1px #a2c1f3;
+      padding:2em;
+      border-radius:4px;
+  }
+
+  .stats-data{
+      font-weight:500;
+  }
+
+  .CTA-btn{
+    position:absolute;
+    top:8px;
+    right:8px;
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.4em 1em;
+    border-radius: 0.5em;
+    font-size: 1.2rem;
+  }
+
+  .profile-bio{
+      padding:1em;
+      font-size: 1.5rem;
+  }
+
+  .profile-details-banner img{
+      border-radius: 50%;
+  }
+
+  .profile-details-username{
+      font-size: 1.2rem;
+      padding:1em;
+      font-weight: bold;
+  }
+
+  .profile-details-stats{
+      display: flex;
+  }
+
+  .profile-details-stats div{
+      margin: 0 0.5em;
+  }
+
+  .saved-chats{
+    padding:2em;
+  }
+
+  .saved-chats-title{
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 0.5em 0.5em;
+  }

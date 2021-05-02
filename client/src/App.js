@@ -1,10 +1,9 @@
-import { LandingPage, HomePage } from "./pages";
+import { LandingPage, HomePage, RoomPage, ProfilePage } from "./pages";
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { PrivateRoute } from "./PrivateRoute";
-import { RoomPage } from "./pages/RoomPage/RoomPage";
 import { useUser } from "./context/UserProvider";
 
 function App() {
@@ -33,7 +32,8 @@ function App() {
     <div className="App">
       <Routes>
         <PrivateRoute path="/home" element={<HomePage />} />
-        <Route path="/room/:roomId" element={<RoomPage />} />
+        <PrivateRoute path="/profile/:userId" element={<ProfilePage />} />
+        <PrivateRoute path="/room/:roomId" element={<RoomPage />} />
         <Route path="/" element={<LandingPage />} />
       </Routes>
     </div>

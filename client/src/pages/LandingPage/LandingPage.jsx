@@ -19,6 +19,7 @@ export const LandingPage = () => {
               email: user.email,
               username: user.nickname,
               profilePic: user.picture,
+              bio: "Hello World! I love Socialley💻❤"
             },
           });
           const userFromApi = response.data.user;

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./RoomPage.module.css";
 import { useRoom } from "../../context/RoomProvider";
 import { useUser } from "../../context/UserProvider";
@@ -11,6 +11,7 @@ import {
   ParticipantsSvg,
   SendSvg,
 } from "../../assets/Svg";
+import { Participants } from "../../components/Participants/Participants";
 
 const socket = io.connect("http://localhost:8080", {
   transports: ["websocket"],
@@ -18,12 +19,16 @@ const socket = io.connect("http://localhost:8080", {
 
 export function RoomPage() {
   let textAreaRef = useRef(null);
-  const [text, setText] = useState("");
   const { roomId } = useParams();
-
+  const navigate = useNavigate();
+  const goToPreviousPath = () => {
+    navigate("/home");
+  };
   const { roomState, roomDispatch } = useRoom();
-
   const { userState } = useUser();
+  const [text, setText] = useState("");
+  const [showParticipants, setShowParticipants] = useState(false);
+  const scroll = useRef();
 
   useEffect(() => {
     if (textAreaRef) {
@@ -82,7 +87,10 @@ export function RoomPage() {
       const res = await axios.post(`http://localhost:8080/room/${roomId}`, {
         roomUpdates: { chat: [...roomState.chat, message] },
       });
-      socket.emit("message", { roomId, message });
+      if (res.status === 200) {
+        socket.emit("message", { roomId, message });
+      }
+      scroll.current.scrollIntoView({ behavior: "smooth" });
       setText("");
     } catch (error) {
       console.log({ error });
@@ -92,20 +100,39 @@ export function RoomPage() {
   function sendMessageOnEnter(e) {
     if (e.code === "Enter" && text !== "") {
       e.preventDefault();
+      if (scroll?.current) {
+        scroll.current.scrollIntoView({ behavior: "smooth" });
+      }
       sendMessage();
     }
   }
 
   return (
     <div>
-      <div className={styles["header"]}>
+      {showParticipants && (
+        <Participants setShowParticipants={setShowParticipants} />
+      )}
+      <div className={styles.header}>
         <div className={styles["header-lhs"]}>
-          <BackArrowSvg />
+          <div className={styles["back-btn"]} onClick={goToPreviousPath}>
+            <BackArrowSvg />
+          </div>
           <span className={styles["room-title"]}>{roomState.topic}</span>
         </div>
         <div className={styles["header-rhs"]}>
-          <RaiseHandSvg />
-          <ParticipantsSvg />
+          <button className={styles["btn-raise-hand"]}>
+            <RaiseHandSvg />
+            {/* {roomState.moderators.find((item) =>
+              item._id === userState._id ? (
+                <span className={styles["badge-raise-hand"]}></span>
+              ) : (
+                <div></div>
+              )
+            )} */}
+          </button>
+          <button onClick={() => setShowParticipants(!showParticipants)}>
+            <ParticipantsSvg />
+          </button>
         </div>
       </div>
       <div className={styles["chat-container"]}>

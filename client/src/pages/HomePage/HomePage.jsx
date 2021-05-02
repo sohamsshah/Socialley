@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { useRoom } from "../../context/RoomProvider";
 import { useUser } from "../../context/UserProvider";
@@ -13,13 +13,16 @@ import {
 } from "../../assets/Svg";
 
 export function HomePage() {
+  const navigate = useNavigate();
+  const goToPreviousPath = () => {
+    navigate("/");
+  };
   const [showModal, setShowModal] = useState(false);
   const { roomDispatch } = useRoom();
   const { userState } = useUser();
   const [topic, setTopic] = useState("");
   const [description, setDescription] = useState("");
   const [rooms, setRooms] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     (async function () {
@@ -79,15 +82,20 @@ export function HomePage() {
       <div className={styles["main-content"]}>
         <div className={styles["header"]}>
           <div className={styles["header-lhs"]}>
-            <BackArrowSvg />
+            <div className={styles["back-btn"]} onClick={goToPreviousPath}>
+              <BackArrowSvg />
+            </div>
             <span className={styles["home-title"]}>Socailley 💬</span>
           </div>
           <div className={styles["header-rhs"]}>
-            <img
-              className={styles["profile-pic"]}
-              src="https://i.pinimg.com/564x/51/f6/fb/51f6fb256629fc755b8870c801092942.jpg"
-              alt="avatar profile"
-            ></img>
+            <Link to={`/profile/${userState._id}`}>
+              {" "}
+              <img
+                className={styles["profile-pic"]}
+                src={`${userState.profilePic}`}
+                alt="avatar profile"
+              ></img>
+            </Link>
           </div>
         </div>
         <div className={styles["feed"]}>

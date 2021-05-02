@@ -15,6 +15,10 @@
   align-items: center;
 }
 
+.back-btn{
+  cursor:pointer;
+}
+
 .header-rhs {
   display: flex;
 }
@@ -27,7 +31,8 @@
   max-width: 100vw;
   display: flex;
   flex-direction: column;
-  margin: 0 1em 2em;
+  margin: 1rem 1rem 3rem;
+  padding-bottom: 6rem;
 }
 
 .chat-others {
@@ -93,4 +98,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn-raise-hand {
+  position: relative;
+}
+
+.badge-raise-hand {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  position: absolute;
+  top: -6px;
+  border-radius: 50%;
+  right: 12px;
 }
