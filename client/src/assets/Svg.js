@@ -14,6 +14,13 @@ export function BackArrowSvg() {
   );
 }
 
+
+export function PhChatCenteredDots(props) {
+  return (
+    <svg width="1em" height="1em" viewBox="0 0 256 256" {...props}><path d="M216.001 40h-176a16.018 16.018 0 0 0-16 16v127.999a16.018 16.018 0 0 0 16 16l59.47.001l14.81 24.683a16 16 0 0 0 27.44 0L156.53 200H216a16.019 16.019 0 0 0 16.001-16V56a16.018 16.018 0 0 0-16-16zM216 184h-59.47a16.081 16.081 0 0 0-13.72 7.768L128 216.45l-14.81-24.682a16.08 16.08 0 0 0-13.72-7.769H40V56h176zm-100-64a12 12 0 1 1 12 12a12 12 0 0 1-12-12zm-48 0a12 12 0 1 1 12 12a12 12 0 0 1-12-12zm96 0a12 12 0 1 1 12 12a12 12 0 0 1-12-12z" fill="currentColor"></path></svg>
+  )
+}
+
 export function RaiseHandSvg() {
   return (
     <svg
