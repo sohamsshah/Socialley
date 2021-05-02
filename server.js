@@ -35,6 +35,13 @@ if (process.env.NODE_ENV === "production") {
 
 io.on("connection", (socket) => {
   console.log("connected");
+  socket.on("disconnect", () => {
+    console.log("User has left the discussion");
+  });
+
+  socket.on("message", ({ roomId, message }) => {
+    io.emit("message", { message });
+  });
 });
 
 const server_port = process.env.YOUR_PORT || process.env.PORT || PORT;

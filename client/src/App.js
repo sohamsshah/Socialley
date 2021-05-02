@@ -5,17 +5,11 @@ import { PrivateRoute } from "./PrivateRoute";
 import { RoomPage } from "./pages/RoomPage/RoomPage";
 
 function App() {
-  const socket = io.connect("http://localhost:8080", {
-    transports: ["websocket"],
-  });
-
-  console.log(socket);
-
   return (
     <div className="App">
       <Routes>
         <PrivateRoute path="/home" element={<HomePage />} />
-        <Route path="/room" element={<RoomPage />} />
+        <Route path="/room/:roomId" element={<RoomPage />} />
         <Route path="/" element={<LandingPage />} />
       </Routes>
     </div>
