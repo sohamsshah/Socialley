@@ -10,8 +10,6 @@ export const LandingPage = () => {
   const navigate = useNavigate();
   const { userDispatch } = useUser();
 
-  console.log(user);
-
   useEffect(() => {
     if (isAuthenticated) {
       (async () => {
@@ -53,6 +51,12 @@ export const LandingPage = () => {
           <button
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded text-2xl"
             onClick={() => loginWithRedirect()}
+          >
+            Sign In
+          </button>
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded text-2xl"
+            onClick={() => logout()}
           >
             Sign In
           </button>

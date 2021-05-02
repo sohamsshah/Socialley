@@ -81,11 +81,11 @@ router
     });
   })
   .post(async (req, res) => {
-    const roomUpdates = req.body;
+    const { roomUpdates } = req.body;
     let room = req.room;
     room = extend(room, roomUpdates);
     room = await room.save();
-    res.json({
+    res.status(200).json({
       room,
       success: true,
       message: "Successful",
@@ -94,7 +94,7 @@ router
   .delete(async (req, res) => {
     let room = req;
     room = await room.remove();
-    res.json({ room, success: true, message: "Successful" });
+    res.status(200).json({ room, success: true, message: "Successful" });
   });
 
 module.exports = router;
