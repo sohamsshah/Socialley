@@ -32,8 +32,6 @@ export function RoomPage() {
     }
   }, [text]);
 
-  // console.log(roomState.participants);
-
   useEffect(() => {
     (async () => {
       try {
@@ -56,8 +54,6 @@ export function RoomPage() {
       }
     })();
   }, []);
-
-  console.log({ roomState });
 
   useEffect(() => {
     (async function () {
@@ -113,19 +109,20 @@ export function RoomPage() {
         </div>
       </div>
       <div className={styles["chat-container"]}>
-        {roomState.chat.map((message) => (
-          <div
-            className={
-              message.userId === userState._id
-                ? styles["chat-user"]
-                : styles["chat-others"]
-            }
-          >
-            <div className={styles["chat-name"]}>Jonh Doe</div>
-            <div className={styles["chat-message"]}>{message.message}</div>
-            <div className={styles["chat-time"]}>12:34pm</div>
-          </div>
-        ))}
+        {roomState.chat &&
+          roomState.chat.map((message) => (
+            <div
+              className={
+                message.userId === userState._id
+                  ? styles["chat-user"]
+                  : styles["chat-others"]
+              }
+            >
+              <div className={styles["chat-name"]}>Jonh Doe</div>
+              <div className={styles["chat-message"]}>{message.message}</div>
+              <div className={styles["chat-time"]}>12:34pm</div>
+            </div>
+          ))}
       </div>
       <div className={styles.footer}>
         <textarea
