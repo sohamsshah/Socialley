@@ -109,7 +109,7 @@ export function RoomPage() {
 
   return (
     <div>
-      <div className={styles.header}>
+      <div className={styles["header"]}>
         <div className={styles["header-lhs"]}>
           <BackArrowSvg />
           <span className={styles["room-title"]}>{roomState.topic}</span>
