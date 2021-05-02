@@ -49,7 +49,7 @@ export const LandingPage = () => {
         </div>
         <div className="flex flex-col items-center lg:w-full justify-center lg:mb-48 lg:mr-40">
           <h2 className="text-center my-8 text-5xl font-bold md:font-bold">
-            A Valley for Socials
+            A Discussion Alley for smart socializing.
           </h2>
           <button
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded text-2xl"

@@ -10,8 +10,8 @@ import {
   
 
 export function ProfilePage() {
-    const [user, setUser] = useState({});
-    const [userData, setUserData] = useState({bio: user.bio, email:user.email, profilePic: user.profilePic, username:user.username})
+    const [fetchedUser, setFetchedUser] = useState({});
+    const [userData, setUserData] = useState({})
     const { userId } = useParams();
     const {userState:{_id, profilePic}} = useUser();
     const isUserProfile = _id === userId;
@@ -27,14 +27,26 @@ export function ProfilePage() {
     const handleModalHide = () => {
       setShowModal(false);
     };
+
+    const editData = async () => {
+      setFetchedUser(userData);
+      try {
+        const {
+          data: { room },
+        } = await axios.post("https://socialley.sohamsshah.repl.co/user", {});
+      } catch (error) {
+        console.log({ error });
+      }
+    }
+    
     
     useEffect(() => {
         (async () => {
             try {
               const {data: {user}} = await axios.get(`http://localhost:8080/user/${_id}`);
-              console.log(user)
               user.bio = "Hello World! I love Socialley"
-              setUser(user);
+              setUserData({bio: user.bio, email:user.email, profilePic: user.profilePic, username:user.username})
+              setFetchedUser(user);
             } catch (error) {
               console.log(error);
             }
@@ -55,14 +67,14 @@ export function ProfilePage() {
       </div>
       <div className={styles["profile-details"]}>
           <div className={styles["profile-details-banner"]}>
-            <img src={user.profilePic} />
-            <div className={styles["profile-details-username"]}>@{user.username}</div>
+            <img src={fetchedUser.profilePic} />
+            <div className={styles["profile-details-username"]}>@{fetchedUser.username}</div>
             <div className={styles["profile-details-stats"]}>
             <div className={styles["profile-details-followers"]}>
-                <span className={styles["followers-text"]}>Followers </span><span className={styles["stats-data"]}>{(user.followers) ? user.followers.length : ""}</span>
+                <span className={styles["followers-text"]}>Followers </span><span className={styles["stats-data"]}>{(fetchedUser.followers) ? fetchedUser.followers.length : ""}</span>
             </div>
             <div className={styles["profile-details-following"]}>
-            <span className={styles["following-text"]}>Following </span> <span className={styles["stats-data"]}>{(user.following) ? user.following.length : ""}</span> 
+            <span className={styles["following-text"]}>Following </span> <span className={styles["stats-data"]}>{(fetchedUser.following) ? fetchedUser.following.length : ""}</span> 
             </div>
             </div>
             <div className={styles["CTA-btn"]}>
@@ -70,7 +82,7 @@ export function ProfilePage() {
                 
             </div>
             <div className={styles["profile-bio"]}>
-                {user.bio}
+                {fetchedUser.bio}
             </div>
           </div>
           {
@@ -101,25 +113,37 @@ export function ProfilePage() {
             <CloseButtonSvg />
           </button>
           <input
-            // onChange={(e) => setTopic(e.target.value)}
-            placeholder="Room Name"
+            onChange={(e) => setUserData({...userData, username:e.target.value})}
+            placeholder="Username"
             className={styles["modal-title"]}
-            // value={topic}
+            value={userData.username}
+          />
+          <input
+            onChange={(e) => setUserData({...userData, email:e.target.value})}
+            placeholder="Email"
+            className={styles["modal-title"]}
+            value={userData.email}
+          />
+          <input
+            onChange={(e) => setUserData({...userData, profilePic:e.target.value})}
+            placeholder="Profile Pic"
+            className={styles["modal-title"]}
+            value={userData.profilePic}
           />
           <textarea
-            placeholder="Room Description"
+            placeholder="Bio"
             className={styles["modal-description"]}
-            // onChange={(e) => setDescription(e.target.value)}
-            // value={description}
+            onChange={(e) => setUserData({...userData, bio:e.target.value})}
+            value={userData.bio}
           />
           <button
             className={styles["modal-create-button"]}
             onClick={() => {
-              // createRoom();
+              editData();
               handleModalHide();
             }}
           >
-            Create
+            Update
           </button>
         </div>
       </div>

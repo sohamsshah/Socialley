@@ -75,7 +75,9 @@ export function RoomPage() {
     })();
     socket.on("message", ({ message }) => {
       console.log(message);
+      if(message){
       roomDispatch({ type: "ADD_MESSAGE", payload: message });
+      }
     });
   }, []);
 
