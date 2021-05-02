@@ -12,7 +12,6 @@
   align-items: center;
   background-color: #fff;
   border: 1px solid #f0eded;
-  margin-bottom: 1em;
 }
 
 .header-lhs {
@@ -43,9 +42,8 @@
 }
 
 .feed-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  padding: 0.5em 0.5em;
 }
 
 .room-card {
@@ -121,7 +119,7 @@
 }
 
 .create-room {
-  position: sticky;
+  position: fixed;
   text-align: center;
   width: 100%;
   bottom: 0;
@@ -132,7 +130,7 @@
   background-color: #fff;
   border: 1px solid #f0eded;
   margin-top: 1em;
-  z-index: 2;
+  z-index: 1;
 }
 
 .create-room-modal {

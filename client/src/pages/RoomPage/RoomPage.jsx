@@ -48,11 +48,9 @@ export function RoomPage() {
             },
           }
         );
-        if (response.status === 200) {
-          const savedRoom = response.data.room;
-          socket.emit("joinRoom", { userId: userState._id, roomId });
-          roomDispatch({ type: "ADD_ROOM", payload: savedRoom });
-        }
+        const savedRoom = response.data.room;
+        socket.emit("joinRoom", { userId: userState._id, roomId });
+        roomDispatch({ type: "ADD_ROOM", payload: savedRoom });
       } catch (error) {
         console.log(error);
       }
@@ -66,11 +64,8 @@ export function RoomPage() {
       try {
         const {
           data: { room },
-          status,
         } = await axios.get(`http://localhost:8080/room/${roomId}`);
-        if (status === 200) {
-          roomDispatch({ type: "ADD_ROOM", payload: room });
-        }
+        roomDispatch({ type: "ADD_ROOM", payload: room });
       } catch (error) {
         console.log({ error });
       }
@@ -91,9 +86,7 @@ export function RoomPage() {
       const res = await axios.post(`http://localhost:8080/room/${roomId}`, {
         roomUpdates: { chat: [...roomState.chat, message] },
       });
-      if (res.status === 200) {
-        socket.emit("message", { roomId, message });
-      }
+      socket.emit("message", { roomId, message });
       setText("");
     } catch (error) {
       console.log({ error });
