@@ -1,8 +1,8 @@
 # Socialley 💬
 
-Alley for valuable socializing.
+A Discussion Alley for valuable socializing.
 
-## LIVE SITE: https://socialley.herokuapp.com/
+## LIVE SITE: https://socialley.netlify.app/
 
 ## Development Guide
 
