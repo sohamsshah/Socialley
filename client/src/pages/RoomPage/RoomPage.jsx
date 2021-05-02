@@ -40,28 +40,33 @@ export function RoomPage() {
     }
   }, [text]);
 
+  const hasParticipant = roomState.participants.some(
+    (item) => item._id === userState._id
+  );
+  console.log(hasParticipant);
+
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.post(
-          `https://socialley.sohamsshah.repl.co/room/${roomId}`,
-          {
-            roomUpdates: {
-              participants: [
-                ...roomState.participants,
-                { ...userState, isPresent: true },
-              ],
-            },
-          }
-        );
-        const savedRoom = response.data.room;
-        socket.emit("joinRoom", { userId: userState._id, roomId });
-        console.log(savedRoom);
-        roomDispatch({ type: "ADD_ROOM", payload: savedRoom });
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    !hasParticipant &&
+      (async () => {
+        try {
+          const response = await axios.post(
+            `https://socialley.sohamsshah.repl.co/room/${roomId}`,
+            {
+              roomUpdates: {
+                participants: [
+                  ...roomState.participants,
+                  { ...userState, isPresent: true },
+                ],
+              },
+            }
+          );
+          const savedRoom = response.data.room;
+          socket.emit("joinRoom", { userId: userState._id, roomId });
+          roomDispatch({ type: "ADD_ROOM", payload: savedRoom });
+        } catch (error) {
+          console.log(error);
+        }
+      })();
   }, []);
 
   useEffect(() => {
