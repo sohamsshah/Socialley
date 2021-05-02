@@ -92,6 +92,7 @@ export function RoomPage() {
   async function sendMessage() {
     const message = {
       userId: userState._id,
+      username: userState.username,
       message: text,
       time: Date.now(),
     };
@@ -188,7 +189,7 @@ export function RoomPage() {
                   : styles["chat-others"]
               }
             >
-              <div className={styles["chat-name"]}>{userState.username}</div>
+              <div className={styles["chat-name"]}>{message.username}</div>
               <div className={styles["chat-message"]}>{message.message}</div>
               <div className={styles["chat-time"]}>12:34pm</div>
             </div>
