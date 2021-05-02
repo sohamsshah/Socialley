@@ -110,7 +110,7 @@ export function HomePage() {
                 <div className={styles["room-title"]}>{room.topic}</div>
 
                 <div className={styles["moderator"]}>
-                  <div class="flex flex-wrap -space-x-1 overflow-hidden">
+                  <div className="flex flex-wrap -space-x-1 overflow-hidden">
                     <div className={styles["moderator-avatar-stack"]}>
                       <img
                         className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
