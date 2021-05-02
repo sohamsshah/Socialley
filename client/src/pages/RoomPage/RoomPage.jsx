@@ -21,14 +21,9 @@ export function RoomPage() {
   const [text, setText] = useState("");
   const { roomId } = useParams();
 
-  const {
-    roomState: { chat, topic },
-    roomDispatch,
-  } = useRoom();
+  const { roomState, roomDispatch } = useRoom();
 
-  const {
-    userState: { _id },
-  } = useUser();
+  const { userState } = useUser();
 
   useEffect(() => {
     if (textAreaRef) {
@@ -36,6 +31,35 @@ export function RoomPage() {
       textAreaRef.style.height = textAreaRef.scrollHeight + "px";
     }
   }, [text]);
+
+  // console.log(roomState.participants);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.post(
+          `http://localhost:8080/room/${roomId}`,
+          {
+            roomUpdates: {
+              participants: [
+                ...roomState.participants,
+                { ...userState, isPresent: true },
+              ],
+            },
+          }
+        );
+        if (response.status === 200) {
+          const savedRoom = response.data.room;
+          socket.emit("joinRoom", { userId: userState._id, roomId });
+          roomDispatch({ type: "ADD_ROOM", payload: savedRoom });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  console.log({ roomState });
 
   useEffect(() => {
     (async function () {
@@ -59,13 +83,13 @@ export function RoomPage() {
 
   async function sendMessage() {
     const message = {
-      userId: _id,
+      userId: userState._id,
       message: text,
       time: Date.now(),
     };
     try {
       const res = await axios.post(`http://localhost:8080/room/${roomId}`, {
-        roomUpdates: { chat: [...chat, message] },
+        roomUpdates: { chat: [...roomState.chat, message] },
       });
       if (res.status === 200) {
         socket.emit("message", { roomId, message });
@@ -88,7 +112,7 @@ export function RoomPage() {
       <div className={styles.header}>
         <div className={styles["header-lhs"]}>
           <BackArrowSvg />
-          <span className={styles["room-title"]}>{topic}</span>
+          <span className={styles["room-title"]}>{roomState.topic}</span>
         </div>
         <div className={styles["header-rhs"]}>
           <RaiseHandSvg />
@@ -96,10 +120,10 @@ export function RoomPage() {
         </div>
       </div>
       <div className={styles["chat-container"]}>
-        {chat.map((message) => (
+        {roomState.chat.map((message) => (
           <div
             className={
-              message.userId === _id
+              message.userId === userState._id
                 ? styles["chat-user"]
                 : styles["chat-others"]
             }
