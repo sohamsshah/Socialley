@@ -27,13 +27,13 @@ This should start the client on `PORT 3000`
 
 For connect MongoDB database, create a .env file in the root of the repository and add:
 ```
-MONGODB_URI = "request-uri-to-the-maintainers"
+MONGODB_URI = "create-your-own-mongo-db-uri"
 ```
 
 For client side, create a .env file in the `/client` folder of the repository and add:
 ```
 REACT_APP_AUTH0_DOMAIN=socialley.jp.auth0.com
-REACT_APP_AUTH0_CLIENT_ID="request-client-id-to-the-maintainers"
+REACT_APP_AUTH0_CLIENT_ID="create-your-own-client-on-auth0"
 ```
 
 ### **Contributing to Socialley** 🚀
