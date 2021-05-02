@@ -23,7 +23,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 const user = require("./server/routes/user.router");
+const room = require("./server/routes/room.router");
 app.use("/user", user);
+app.use("/room", room);
 
 app.get("/", (req, res) => {
   res.send({ success: true });

@@ -1,10 +1,17 @@
-import React from "react";
-import io from "socket.io-client";
-import {useEffect} from "react"
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./RoomPage.module.css";
 import {useUser} from "./../../context/UserProvider"
+import {
+  BackArrowSvg,
+  RaiseHandSvg,
+  ParticipantsSvg,
+  SendSvg,
+} from "../../assets/Svg";
 
 export function RoomPage() {
-  const socket = io.connect("https://socialley.herokuapp.com/", {
+  let textAreaRef = useRef(null);
+  const [text, setText] = useState("");
+  const socket = io.connect("http://localhost:8080/", {
     transports: ["websocket"],
   });
   const {userState} = useUser();
@@ -21,5 +28,95 @@ export function RoomPage() {
     //         console.log(message);
     //     })
       })
-  return <div>Hello</div>;
+
+  useEffect(() => {
+    if (textAreaRef) {
+      textAreaRef.style.height = "35px";
+      textAreaRef.style.height = textAreaRef.scrollHeight + "px";
+    }
+  }, [text]);
+
+  return (
+    <div>
+      <div className={styles.header}>
+        <div className={styles["header-lhs"]}>
+          <BackArrowSvg />
+          <span className={styles["room-title"]}>Room Title</span>
+        </div>
+        <div className={styles["header-rhs"]}>
+          <RaiseHandSvg />
+          <ParticipantsSvg />
+        </div>
+      </div>
+      <div className={styles["chat-container"]}>
+        <div className={styles["chat-others"]}>
+          <div className={styles["chat-name"]}>Jonh Doe</div>
+          <div className={styles["chat-message"]}>
+            Lorem ipsum dolor, sit amet consect etur adipisicing elit.
+          </div>
+          <div className={styles["chat-time"]}>12:34pm</div>
+        </div>
+        <div className={styles["chat-user"]}>
+          <div className={styles["chat-name"]}>Jonh Doe</div>
+          <div className={styles["chat-message"]}>
+            Lorem ipsum dolor, sit amet consect etur adipisicing elit.
+          </div>
+          <div className={styles["chat-time"]}>12:34pm</div>
+        </div>
+        <div className={styles["chat-user"]}>
+          <div className={styles["chat-name"]}>Jonh Doe</div>
+          <div className={styles["chat-message"]}>
+            Lorem ipsum dolor, sit amet consect etur adipisicing elit.
+          </div>
+          <div className={styles["chat-time"]}>12:34pm</div>
+        </div>
+        <div className={styles["chat-user"]}>
+          <div className={styles["chat-name"]}>Jonh Doe</div>
+          <div className={styles["chat-message"]}>
+            Lorem ipsum dolor, sit amet consect etur adipisicing elit.
+          </div>
+          <div className={styles["chat-time"]}>12:34pm</div>
+        </div>
+        <div className={styles["chat-user"]}>
+          <div className={styles["chat-name"]}>Jonh Doe</div>
+          <div className={styles["chat-message"]}>
+            Lorem ipsum dolor, sit amet consect etur adipisicing elit.
+          </div>
+          <div className={styles["chat-time"]}>12:34pm</div>
+        </div>
+        <div className={styles["chat-user"]}>
+          <div className={styles["chat-name"]}>Jonh Doe</div>
+          <div className={styles["chat-message"]}>
+            Lorem ipsum dolor, sit amet consect etur adipisicing elit.
+          </div>
+          <div className={styles["chat-time"]}>12:34pm</div>
+        </div>
+        <div className={styles["chat-user"]}>
+          <div className={styles["chat-name"]}>Jonh Doe</div>
+          <div className={styles["chat-message"]}>
+            Lorem ipsum dolor, sit amet consect etur adipisicing elit.
+          </div>
+          <div className={styles["chat-time"]}>12:34pm</div>
+        </div>
+        <div className={styles["chat-user"]}>
+          <div className={styles["chat-name"]}>Jonh Doe</div>
+          <div className={styles["chat-message"]}>
+            Lorem ipsum dolor, sit amet consect etur adipisicing elit.
+          </div>
+          <div className={styles["chat-time"]}>12:34pm</div>
+        </div>
+      </div>
+      <div className={styles.footer}>
+        <textarea
+          placeholder="Type a message"
+          className={styles["text-box"]}
+          ref={(ref) => (textAreaRef = ref)}
+          onChange={(e) => setText(e.target.value)}
+        ></textarea>
+        <span className={styles["send-button"]}>
+          <SendSvg />
+        </span>
+      </div>
+    </div>
+  );
 }
