@@ -1,4 +1,4 @@
-const users = []; // db // 1 2 3
+let users = []; // db // 1 2 3
 
 // Join User to chat
 
@@ -11,14 +11,16 @@ function userJoin(userId, roomId) {
 
 // Get the current user
 
-function getCurrentUser(id) {
-    return users.find(user => user.id === id);
+function getCurrentUser(userId) {
+    return users.find(user => user.userId === userId);
 }
 
 // User leaves chat
 function userLeave(userId) {
+    const user = getCurrentUser(userId);
     users = users.filter((user) => user.userId !== userId);
-    return userId;
+    return user;
+     
 }
 
 // Get room users

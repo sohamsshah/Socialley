@@ -3,7 +3,7 @@ const http = require("http");
 const socketio = require("socket.io");
 const cors = require("cors");
 const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./server/utils/users')
-
+const {}
 const PORT = process.env.PORT || 8080;
 
 // init
@@ -62,16 +62,27 @@ io.on("connection", (socket) => {
           io.to(user.roomId).emit(
             'message',
              `${user.userId} has left the chat`
-          );}})
+          );}
     
-    //       // Send users and room info
-    //       io.to(user.room).emit('roomUsers', {
-    //         room: user.room,
-    //         users: getRoomUsers(user.room)
-    //       });
-    //     }
-    //   });
-});});
+          // Send users and room info
+          io.to(user.roomId).emit('roomUsers', {
+            roomId: user.roomId,
+            users: getRoomUsers(user.roomId)
+          });
+        }
+      );
+})
+
+  socket.on('chatMessage', msg => {
+
+    const user = getCurrentUser(userId);
+    console.log(user);
+
+    io.emit('message', formatMessage(user.userId, msg));
+  });
+
+
+});
 
 
 
