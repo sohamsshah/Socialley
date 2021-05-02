@@ -5,19 +5,28 @@ import RoomCard from "./../../components/RoomCard/RoomCard"
 import {useUser} from"./../../context/UserProvider"
 import {useParams, useNavigate} from "react-router-dom"
 import {
-    BackArrowSvg,
+    BackArrowSvg, CloseButtonSvg
   } from "../../assets/Svg";
   
 
 export function ProfilePage() {
     const [user, setUser] = useState({});
+    const [userData, setUserData] = useState({bio: user.bio, email:user.email, profilePic: user.profilePic, username:user.username})
     const { userId } = useParams();
     const {userState:{_id, profilePic}} = useUser();
     const isUserProfile = _id === userId;
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
     const goToPreviousPath = () => {
         navigate("/home")
     }
+    const handleModalShow = () => {
+      setShowModal(true);
+    };
+  
+    const handleModalHide = () => {
+      setShowModal(false);
+    };
     
     useEffect(() => {
         (async () => {
@@ -57,7 +66,7 @@ export function ProfilePage() {
             </div>
             </div>
             <div className={styles["CTA-btn"]}>
-                {(isUserProfile) ? <button>Edit</button> : <button>Follow</button>}
+                {(isUserProfile) ? <button onClick={handleModalShow}>Edit</button> : <button>Follow</button>}
                 
             </div>
             <div className={styles["profile-bio"]}>
@@ -76,6 +85,44 @@ export function ProfilePage() {
           </div> :""
           }
           </div>
+          
+      <div
+        className={
+          showModal
+            ? styles["create-room-modal"]
+            : styles["create-room-modal-hidden"]
+        }
+      >
+        <div className={styles["modal-container"]}>
+          <button
+            onClick={handleModalHide}
+            className={styles["modal-close-button"]}
+          >
+            <CloseButtonSvg />
+          </button>
+          <input
+            // onChange={(e) => setTopic(e.target.value)}
+            placeholder="Room Name"
+            className={styles["modal-title"]}
+            // value={topic}
+          />
+          <textarea
+            placeholder="Room Description"
+            className={styles["modal-description"]}
+            // onChange={(e) => setDescription(e.target.value)}
+            // value={description}
+          />
+          <button
+            className={styles["modal-create-button"]}
+            onClick={() => {
+              // createRoom();
+              handleModalHide();
+            }}
+          >
+            Create
+          </button>
+        </div>
+      </div>
             
         </div>
     )

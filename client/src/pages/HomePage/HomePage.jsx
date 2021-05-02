@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useRoom } from "../../context/RoomProvider";
 import { useUser } from "../../context/UserProvider";
+import {useAuth0} from "@auth0/auth0-react"
 import styles from "./HomePage.module.css";
 import {
   BackArrowSvg,
@@ -24,7 +25,6 @@ export function HomePage() {
   const [topic, setTopic] = useState("");
   const [description, setDescription] = useState("");
   const [rooms, setRooms] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     (async function () {
