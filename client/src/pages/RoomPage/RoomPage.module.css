@@ -105,11 +105,13 @@
 }
 
 .badge-raise-hand {
-  width: 10px;
-  height: 10px;
+  width: 17px;
+  height: 20px;
+  padding-bottom: 24px;
   background-color: red;
-  position: absolute;
-  top: -6px;
   border-radius: 50%;
-  right: 12px;
+  position: absolute;
+  top: -12px;
+  right: 6px;
+  color: #fff;
 }

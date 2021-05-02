@@ -11,6 +11,7 @@ export const RoomProvider = ({ children }) => {
     participants: [],
     stage: [],
     moderators: [],
+    raisedHands: [],
   });
 
   return (

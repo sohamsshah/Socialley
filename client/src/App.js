@@ -5,6 +5,8 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { PrivateRoute } from "./PrivateRoute";
 import { useUser } from "./context/UserProvider";
+import { Loading } from "./assets/Svg";
+import "./index.css";
 
 function App() {
   const { userDispatch } = useUser();
@@ -27,7 +29,11 @@ function App() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading">
+        <Loading />
+      </div>
+    );
   }
 
   return (
