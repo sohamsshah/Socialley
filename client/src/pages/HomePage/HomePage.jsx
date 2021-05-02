@@ -29,7 +29,7 @@ export function HomePage() {
       try {
         const {
           data: { rooms },
-        } = await axios.get("http://localhost:8080/room");
+        } = await axios.get("https://socialley.sohamsshah.repl.co/room");
         setRooms(rooms);
       } catch (error) {
         console.log({ error });
@@ -50,7 +50,7 @@ export function HomePage() {
     try {
       const {
         data: { room },
-      } = await axios.post("http://localhost:8080/room", {
+      } = await axios.post("https://socialley.sohamsshah.repl.co/room", {
         newRoom: {
           topic: topic,
           description: description,

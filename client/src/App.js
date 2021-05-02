@@ -16,7 +16,9 @@ function App() {
         const userId = await JSON.parse(localStorage.getItem("userId"));
         const {
           data: { user },
-        } = await axios.get(`http://localhost:8080/user/${userId}`);
+        } = await axios.get(
+          `https://socialley.sohamsshah.repl.co/user/${userId}`
+        );
         userDispatch({ type: "ADD_USER", payload: user });
       } catch (error) {
         console.log({ error });

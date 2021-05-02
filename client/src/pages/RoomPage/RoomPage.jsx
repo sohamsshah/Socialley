@@ -13,7 +13,7 @@ import {
 } from "../../assets/Svg";
 import { Participants } from "../../components/Participants/Participants";
 
-const socket = io.connect("http://localhost:8080", {
+const socket = io.connect("https://socialley.sohamsshah.repl.co/", {
   transports: ["websocket"],
 });
 
@@ -41,7 +41,7 @@ export function RoomPage() {
     (async () => {
       try {
         const response = await axios.post(
-          `http://localhost:8080/room/${roomId}`,
+          `https://socialley.sohamsshah.repl.co/room/${roomId}`,
           {
             roomUpdates: {
               participants: [
@@ -65,7 +65,9 @@ export function RoomPage() {
       try {
         const {
           data: { room },
-        } = await axios.get(`http://localhost:8080/room/${roomId}`);
+        } = await axios.get(
+          `https://socialley.sohamsshah.repl.co/room/${roomId}`
+        );
         roomDispatch({ type: "ADD_ROOM", payload: room });
       } catch (error) {
         console.log({ error });
@@ -84,9 +86,12 @@ export function RoomPage() {
       time: Date.now(),
     };
     try {
-      const res = await axios.post(`http://localhost:8080/room/${roomId}`, {
-        roomUpdates: { chat: [...roomState.chat, message] },
-      });
+      const res = await axios.post(
+        `https://socialley.sohamsshah.repl.co/room/${roomId}`,
+        {
+          roomUpdates: { chat: [...roomState.chat, message] },
+        }
+      );
       if (res.status === 200) {
         socket.emit("message", { roomId, message });
       }
