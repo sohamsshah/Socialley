@@ -23,6 +23,7 @@ export const LandingPage = () => {
           });
           const userFromApi = response.data.user;
           userDispatch({ type: "ADD_USER", payload: userFromApi });
+          localStorage.setItem("userId", JSON.stringify(userFromApi._id));
         } catch (error) {
           console.log(error);
         }
