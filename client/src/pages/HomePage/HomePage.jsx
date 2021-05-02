@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useRoom } from "../../context/RoomProvider";
 import { useUser } from "../../context/UserProvider";
@@ -94,48 +94,50 @@ export function HomePage() {
           <div className={styles["feed-title"]}>Join Rooms</div>
           <div className={styles["rooms"]}>
             {rooms.map((room) => (
-              <Link to={`/room/${room._id}`}>
-                <div
-                  className={styles["room-card"]}
-                  key={room._id}
-                  onClick={() => joinRoom(room)}
-                >
-                  <div className={styles["room-title"]}>{room.topic}</div>
+              <div
+                className={styles["room-card"]}
+                key={room._id}
+                onClick={() => joinRoom(room)}
+              >
+                <div className={styles["room-title"]}>{room.topic}</div>
 
-                  <div className={styles["moderator"]}>
-                    <div class="flex flex-wrap -space-x-1 overflow-hidden">
-                      <div className={styles["moderator-avatar-stack"]}>
+                <div className={styles["moderator"]}>
+                  <div class="flex flex-wrap -space-x-1 overflow-hidden">
+                    <div className={styles["moderator-avatar-stack"]}>
+                      <img
+                        className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                        src={room.moderators[0]?.profilePic}
+                        alt=""
+                      ></img>
+                      {room.moderators[1]?.profilePic && (
                         <img
-                          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                          // src={room.moderators[0]?.profilePic}
+                          className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                          src={room.moderators[1]?.profilePic}
                           alt=""
                         ></img>
+                      )}
+                      {room.moderators[2]?.profilePic && (
                         <img
-                          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                          // src={room.moderators[1]?.profilePic}
+                          className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                          src={room.moderators[2]?.profilePic}
                           alt=""
                         ></img>
-                        <img
-                          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                          // src={room.moderators[2]?.profilePic}
-                          alt=""
-                        ></img>
-                      </div>
-                    </div>
-                    <div className={styles["moderator-names"]}>
-                      {/* {`by ${room.moderators[0].username}`} */}
+                      )}
                     </div>
                   </div>
-                  <div className={styles["room-stats"]}>
-                    <div className={styles["room-participants"]}>
-                      <ParticipantsSvg /> <div>{room.participants.length}</div>
-                    </div>
-                    <div className={styles["room-chatters"]}>
-                      <PhChatCenteredDots /> <div>{room.stage.length}</div>
-                    </div>
+                  <div className={styles["moderator-names"]}>
+                    {`by ${room.moderators[0].username}`}
                   </div>
                 </div>
-              </Link>
+                <div className={styles["room-stats"]}>
+                  <div className={styles["room-participants"]}>
+                    <ParticipantsSvg /> <div>{room.participants.length}</div>
+                  </div>
+                  <div className={styles["room-chatters"]}>
+                    <PhChatCenteredDots /> <div>{room.stage.length}</div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
