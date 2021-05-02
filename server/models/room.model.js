@@ -8,7 +8,6 @@ const RoomsSchema = new Schema(
     topic: {
       type: String,
       required: [true, "Topic is required"],
-      unique: true,
     },
     description: {
       type: String,
