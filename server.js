@@ -35,6 +35,56 @@ if (process.env.NODE_ENV === "production") {
 
 io.on("connection", (socket) => {
   console.log("connected");
+
+  socket.on("joinRoom", ({ userId, roomId }) => {
+    console.log(userId, roomId);
+    socket.join(roomId);
+    socket.broadcast
+      .to(roomId)
+      .emit("message", `${userId} has joined the chat`);
+  });
+  // io.to(roomId).emit("roomUsers", {
+  //   roomId: user.roomId,
+  //   users: getRoomUsers(user.roomId),
+  // });
+
+  // const { savedRoom, user } = userJoin(userId, roomId);
+  // console.log(user); // user = {userId, roomId}
+  // console.log(savedRoom);
+
+  // if (user && savedRoom) {
+  //   socket.join(savedRoom._id);
+  // }
+
+  // // Broadcast when a user connects
+  // socket.broadcast
+  //   .to(savedRoom._id)
+  //   .emit("message", `${user.username} has joined the chat`);
+
+  // // Send users and room info
+  // io.to(savedRoom._id).emit("roomUsers", savedRoom);
+
+  // const user = userJoin(userId, roomId);
+  // console.log(user) // user = {userId, roomId}
+
+  // if (user) {
+  //   socket.join(user.roomId);
+  // }
+
+  // // Broadcast when a user connects
+  // socket.broadcast
+  //   .to(user.roomId)
+  //   .emit(
+  //     'message',
+  //     `${user.userId} has joined the chat`
+  //   );
+
+  // // Send users and room info
+  // io.to(user.roomId).emit('roomUsers', {
+  //   roomId: user.roomId,
+  //   users: getRoomUsers(user.roomId)
+  // });
+
   socket.on("disconnect", () => {
     console.log("User has left the discussion");
   });

@@ -8,6 +8,7 @@ export const RoomProvider = ({ children }) => {
     roomId: "608e88588826f40f04b985bd",
     chat: [],
     topic: "Functional programming",
+    participants: [],
   });
 
   return (
