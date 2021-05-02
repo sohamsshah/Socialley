@@ -9,6 +9,8 @@ export const RoomProvider = ({ children }) => {
     chat: [],
     topic: "Functional programming",
     participants: [],
+    stage: [],
+    moderators: [],
   });
 
   return (

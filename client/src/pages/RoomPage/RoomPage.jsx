@@ -11,6 +11,7 @@ import {
   ParticipantsSvg,
   SendSvg,
 } from "../../assets/Svg";
+import { Participants } from "../../components/Participants/Participants";
 
 const socket = io.connect("http://localhost:8080", {
   transports: ["websocket"],
@@ -18,12 +19,12 @@ const socket = io.connect("http://localhost:8080", {
 
 export function RoomPage() {
   let textAreaRef = useRef(null);
-  const [text, setText] = useState("");
   const { roomId } = useParams();
-
   const { roomState, roomDispatch } = useRoom();
-
   const { userState } = useUser();
+  const [text, setText] = useState("");
+  const [showParticipants, setShowParticipants] = useState(false);
+  const scroll = useRef();
 
   useEffect(() => {
     if (textAreaRef) {
@@ -31,8 +32,6 @@ export function RoomPage() {
       textAreaRef.style.height = textAreaRef.scrollHeight + "px";
     }
   }, [text]);
-
-  // console.log(roomState.participants);
 
   useEffect(() => {
     (async () => {
@@ -95,6 +94,7 @@ export function RoomPage() {
       if (res.status === 200) {
         socket.emit("message", { roomId, message });
       }
+      scroll.current.scrollIntoView({ behavior: "smooth" });
       setText("");
     } catch (error) {
       console.log({ error });
@@ -104,12 +104,16 @@ export function RoomPage() {
   function sendMessageOnEnter(e) {
     if (e.code === "Enter" && text !== "") {
       e.preventDefault();
+      scroll.current.scrollIntoView({ behavior: "smooth" });
       sendMessage();
     }
   }
 
   return (
     <div>
+      {showParticipants && (
+        <Participants setShowParticipants={setShowParticipants} />
+      )}
       <div className={styles.header}>
         <div className={styles["header-lhs"]}>
           <BackArrowSvg />
@@ -117,7 +121,9 @@ export function RoomPage() {
         </div>
         <div className={styles["header-rhs"]}>
           <RaiseHandSvg />
-          <ParticipantsSvg />
+          <button onClick={() => setShowParticipants(!showParticipants)}>
+            <ParticipantsSvg />
+          </button>
         </div>
       </div>
       <div className={styles["chat-container"]}>
@@ -134,6 +140,7 @@ export function RoomPage() {
             <div className={styles["chat-time"]}>12:34pm</div>
           </div>
         ))}
+        <div ref={scroll}></div>
       </div>
       <div className={styles.footer}>
         <textarea
