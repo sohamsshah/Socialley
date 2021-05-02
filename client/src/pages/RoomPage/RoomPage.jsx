@@ -33,6 +33,8 @@ export function RoomPage() {
   const [showRaisedHand, setShowRaisedHand] = useState(false);
   const scroll = useRef();
 
+  console.log(roomState);
+
   useEffect(() => {
     if (textAreaRef) {
       textAreaRef.style.height = "35px";

@@ -1,5 +1,5 @@
 import React from "react";
-import { BackArrowSvg } from "../../assets/Svg";
+import { CloseButtonSvg } from "../../assets/Svg";
 import { useRoom } from "../../context/RoomProvider";
 import styles from "./Participants.module.css";
 
@@ -11,7 +11,7 @@ export const Participants = ({ setShowParticipants }) => {
       <div className={styles["participants-heading"]}>
         <h2 className="text-4xl font-bold">In Room</h2>
         <button onClick={() => setShowParticipants(false)}>
-          <BackArrowSvg />
+          <CloseButtonSvg />
         </button>
       </div>
       <h3 className="text-3xl font-medium py-4">Moderators</h3>
