@@ -53,6 +53,7 @@ export function RoomPage() {
         );
         const savedRoom = response.data.room;
         socket.emit("joinRoom", { userId: userState._id, roomId });
+        console.log(savedRoom);
         roomDispatch({ type: "ADD_ROOM", payload: savedRoom });
       } catch (error) {
         console.log(error);
@@ -74,8 +75,9 @@ export function RoomPage() {
       }
     })();
     socket.on("message", ({ message }) => {
-      console.log(message);
-      roomDispatch({ type: "ADD_MESSAGE", payload: message });
+      if (message) {
+        roomDispatch({ type: "ADD_MESSAGE", payload: message });
+      }
     });
   }, []);
 
@@ -92,11 +94,9 @@ export function RoomPage() {
           roomUpdates: { chat: [...roomState.chat, message] },
         }
       );
-      if (res.status === 200) {
-        socket.emit("message", { roomId, message });
-      }
-      scroll.current.scrollIntoView({ behavior: "smooth" });
+      socket.emit("message", { roomId, message });
       setText("");
+      scroll.current.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
       console.log({ error });
     }
@@ -111,6 +111,8 @@ export function RoomPage() {
       sendMessage();
     }
   }
+
+  console.log(roomState);
 
   return (
     <div>
