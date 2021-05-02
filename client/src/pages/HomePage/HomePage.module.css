@@ -1,167 +1,206 @@
-.home-wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: space-between;
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
 }
 .header {
-    position: sticky;
-    top: 0;
-    display: flex;
-    padding: 0.8em 1em;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
-    border: 1px solid #f0eded;
-    margin-bottom: 1em;
-  }
-  
-  .header-lhs {
-    display: flex;
-    align-items: center;
-    float: left;
-  }
-
-  .back-btn{
-    cursor:pointer;
-  }
-  
-  .header-rhs {
-    display: flex;
-    float: right;
-  }
-  
-  .home-title {
-    padding-left: 1em;
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-
-  .profile-pic{
-    border-radius: 50%;
-    height:3rem;
-    width:3rem;
-  }
-
-  .feed{
-    padding: 0.8em 1em;
-  }
-
-  .feed-title{
-    font-size: 2rem;
-    font-weight: bold;
-    padding: 0.5em 0.5em;
-    
-  }
-
-  .room-card{
-      background-color: rgb(245, 245, 245);
-      border-radius: 4px;
-      padding: 0.8em 1em;
-      margin:1em 0em;
-  }
-
-  .room-card:hover{
-    background-color: #eee;
-    cursor:pointer;
-  }
-
-  .room-title{
-      font-weight: 1.2rem;
-      font-weight: 500;
-      margin-bottom: 0.5em;
-  }
-
-  .room-topic{
-    margin-bottom: 0.5em;
-  }
-
-  .room-topic button{
-      border-radius: 4px;
-      border: solid 1px #3b82f6;
-      padding: 0.2em 0.25em;
-      margin: 0.5em 0em;
-      font-size: 0.8rem;
-      cursor:default;
-  }
-
-  .moderator{
-      display:flex;
-      flex-wrap:wrap;
-      align-items: center;
-      margin-bottom: 0.5em;
-  }
-
-  .moderator-avatar-stack{
-      margin-right:1em;
-  }
-
-  .moderator-names{
-    font-size: 0.8rem;
-    }
-  .room-stats{
-      display: flex;
-      flex-wrap: wrap;
-  }
-  .room-stats div{
-      margin-right:0.5em;
-  }
-  .room-participants{
-    display: flex;
-    align-items: center;
-  }
-  .room-participants div{
-      margin-left:0.5em;
-  }
-
-  .room-chatters{
-    display: flex;
-    align-items: center;
-  }
-  .room-chatters div{
-    margin-left:0.5em;
+  position: sticky;
+  top: 0;
+  display: flex;
+  padding: 0.8em 1em;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #f0eded;
 }
 
-  .room-chatters svg{
-      font-size: 1.5rem;
-  }
+.header-lhs {
+  display: flex;
+  align-items: center;
+  float: left;
+}
 
+.header-rhs {
+  display: flex;
+  float: right;
+}
 
-  .create-room {
-    position: sticky;
-    text-align: center;
-    width:100%;
-    bottom: 0;
-    display: flex;
-    padding: 0.8em 1em;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    border: 1px solid #f0eded;
-    margin-top: 1em;
-    z-index: 2;
-  }
+.home-title {
+  padding-left: 1em;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
 
-  .create-room-modal{
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+.profile-pic {
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+}
 
-  .create-room-modal-hidden{
-      display:none;
-  }
+.feed {
+  padding: 0.8em 1em;
+}
 
-  .create-room button{
-      background-color: #3b82f6;
-      color: white;
-      padding: 0.4em 1em;
-      border-radius: 0.5em;
-      font-size: 1.2rem;
-  }
-  
+.feed-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.room-card {
+  background-color: rgb(245, 245, 245);
+  border-radius: 4px;
+  padding: 0.8em 1em;
+  margin: 1em 0em;
+}
+
+.room-card:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.room-title {
+  font-weight: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.5em;
+}
+
+.room-topic {
+  margin-bottom: 0.5em;
+}
+
+.room-topic button {
+  border-radius: 4px;
+  border: solid 1px #3b82f6;
+  padding: 0.2em 0.25em;
+  margin: 0.5em 0em;
+  font-size: 0.8rem;
+  cursor: default;
+}
+
+.moderator {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.moderator-avatar-stack {
+  margin-right: 1em;
+}
+
+.moderator-names {
+  font-size: 0.8rem;
+}
+.room-stats {
+  display: flex;
+  flex-wrap: wrap;
+}
+.room-stats div {
+  margin-right: 0.5em;
+}
+.room-participants {
+  display: flex;
+  align-items: center;
+}
+.room-participants div {
+  margin-left: 0.5em;
+}
+
+.room-chatters {
+  display: flex;
+  align-items: center;
+}
+.room-chatters div {
+  margin-left: 0.5em;
+}
+
+.room-chatters svg {
+  font-size: 1.5rem;
+}
+
+.create-room {
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  padding: 0.8em 1em;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #f0eded;
+  margin-top: 1em;
+  z-index: 1;
+}
+
+.create-room-modal {
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-room-modal-hidden {
+  display: none;
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50em;
+  max-width: 80%;
+  background-color: #fff;
+  padding: 1em;
+  border-radius: 0.5em;
+}
+
+.modal-close-button {
+  align-self: flex-end;
+  margin-bottom: 0.5em;
+}
+
+.modal-title {
+  margin-bottom: 1em;
+  width: 100%;
+  height: 2em;
+  border-radius: 0.5em;
+  padding: 0 1em;
+  background-color: #e5e9ee;
+}
+
+.modal-description {
+  resize: none;
+  width: 100%;
+  height: 5em;
+  border-radius: 0.5em;
+  padding: 0.5em 1em;
+  background-color: #e5e9ee;
+}
+
+.modal-create-button {
+  background-color: #3b82f6;
+  color: #f8f6f6;
+  padding: 0.5em 1em;
+  margin-top: 1em;
+  border-radius: 0.5em;
+}
+
+.create-room button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.4em 1em;
+  border-radius: 0.5em;
+  font-size: 1.2rem;
+}

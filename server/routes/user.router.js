@@ -16,8 +16,18 @@ router.route("/").post(async (req, res) => {
   try {
     const { newUser } = req.body;
     const user = await findUserByEmail(newUser.email);
+    console.log(user);
+    const populatedUser = await user
+      .populate({
+        path: "savedchats.chatId",
+        select: "topic moderators participants savedTime chat",
+      })
+      .execPopulate();
+    console.log(populatedUser);
     if (user) {
-      res.status(200).json({ user });
+      res
+        .status(200)
+        .json({ user: { ...user._doc, savedchats: populatedUser._doc } });
     } else {
       const newUserFromDB = new User(newUser);
       const savedUser = await newUserFromDB.save();

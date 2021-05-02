@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import styles from "./RoomPage.module.css";
 import { useRoom } from "../../context/RoomProvider";
 import { useUser } from "../../context/UserProvider";
@@ -11,6 +11,7 @@ import {
   ParticipantsSvg,
   SendSvg,
 } from "../../assets/Svg";
+import { Participants } from "../../components/Participants/Participants";
 
 const socket = io.connect("http://localhost:8080", {
   transports: ["websocket"],
@@ -18,15 +19,16 @@ const socket = io.connect("http://localhost:8080", {
 
 export function RoomPage() {
   let textAreaRef = useRef(null);
-  const [text, setText] = useState("");
   const { roomId } = useParams();
   const navigate = useNavigate();
     const goToPreviousPath = () => {
         navigate("/home")
     }
   const { roomState, roomDispatch } = useRoom();
-
   const { userState } = useUser();
+  const [text, setText] = useState("");
+  const [showParticipants, setShowParticipants] = useState(false);
+  const scroll = useRef();
 
   useEffect(() => {
     if (textAreaRef) {
@@ -34,8 +36,6 @@ export function RoomPage() {
       textAreaRef.style.height = textAreaRef.scrollHeight + "px";
     }
   }, [text]);
-
-  // console.log(roomState.participants);
 
   useEffect(() => {
     (async () => {
@@ -51,11 +51,9 @@ export function RoomPage() {
             },
           }
         );
-        if (response.status === 200) {
-          const savedRoom = response.data.room;
-          socket.emit("joinRoom", { userId: userState._id, roomId });
-          roomDispatch({ type: "ADD_ROOM", payload: savedRoom });
-        }
+        const savedRoom = response.data.room;
+        socket.emit("joinRoom", { userId: userState._id, roomId });
+        roomDispatch({ type: "ADD_ROOM", payload: savedRoom });
       } catch (error) {
         console.log(error);
       }
@@ -63,22 +61,19 @@ export function RoomPage() {
   }, []);
 
   console.log({ roomState });
+  console.log({ userState });
 
   useEffect(() => {
     (async function () {
       try {
-        const { status, room } = await axios.get(
-          `http://localhost:8080/room/${roomId}`
-        );
-        console.log(room);
-        if (status === 2000) {
-          roomDispatch({ type: "ADD_ROOM", payload: room });
-        }
+        const {
+          data: { room },
+        } = await axios.get(`http://localhost:8080/room/${roomId}`);
+        roomDispatch({ type: "ADD_ROOM", payload: room });
       } catch (error) {
         console.log({ error });
       }
     })();
-
     socket.on("message", ({ message }) => {
       console.log(message);
       roomDispatch({ type: "ADD_MESSAGE", payload: message });
@@ -98,6 +93,7 @@ export function RoomPage() {
       if (res.status === 200) {
         socket.emit("message", { roomId, message });
       }
+      scroll.current.scrollIntoView({ behavior: "smooth" });
       setText("");
     } catch (error) {
       console.log({ error });
@@ -107,20 +103,35 @@ export function RoomPage() {
   function sendMessageOnEnter(e) {
     if (e.code === "Enter" && text !== "") {
       e.preventDefault();
+      scroll.current.scrollIntoView({ behavior: "smooth" });
       sendMessage();
     }
   }
 
   return (
     <div>
-      <div className={styles["header"]}>
+      {showParticipants && (
+        <Participants setShowParticipants={setShowParticipants} />
+      )}
+      <div className={styles.header}>
         <div className={styles["header-lhs"]}>
         <div className={styles["back-btn"]} onClick={goToPreviousPath} ><BackArrowSvg /></div>
           <span className={styles["room-title"]}>{roomState.topic}</span>
         </div>
         <div className={styles["header-rhs"]}>
-          <RaiseHandSvg />
-          <ParticipantsSvg />
+          <button className={styles["btn-raise-hand"]}>
+            <RaiseHandSvg />
+            {/* {roomState.moderators.find((item) =>
+              item._id === userState._id ? (
+                <span className={styles["badge-raise-hand"]}></span>
+              ) : (
+                <div></div>
+              )
+            )} */}
+          </button>
+          <button onClick={() => setShowParticipants(!showParticipants)}>
+            <ParticipantsSvg />
+          </button>
         </div>
       </div>
       <div className={styles["chat-container"]}>
@@ -137,6 +148,7 @@ export function RoomPage() {
             <div className={styles["chat-time"]}>12:34pm</div>
           </div>
         ))}
+        <div ref={scroll}></div>
       </div>
       <div className={styles.footer}>
         <textarea

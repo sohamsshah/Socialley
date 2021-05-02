@@ -23,9 +23,7 @@ export const LandingPage = () => {
             },
           });
           const userFromApi = response.data.user;
-          if (response.status === 200) {
-            userDispatch({ type: "ADD_USER", payload: userFromApi });
-          }
+          userDispatch({ type: "ADD_USER", payload: userFromApi });
         } catch (error) {
           console.log(error);
         }
