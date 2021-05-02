@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./RoomPage.module.css";
 import {useUser} from "./../../context/UserProvider"
+import io from "socket.io-client";
+import {useParams} from "react-router-dom"
+
 import {
   BackArrowSvg,
   RaiseHandSvg,
@@ -15,18 +18,17 @@ export function RoomPage() {
     transports: ["websocket"],
   });
   const {userState} = useUser();
-  console.log(userState);
-  const userId = userState.data
-  console.log(userId);
-  const roomId = 1;
+  const userId = userState._id;
+  const {roomId} = useParams();
+  
   useEffect(() => { 
-    // socket.emit('joinRoom', { userId, roomId });
-    //     socket.on('roomUsers', ({ room, users }) => {
-    //     console.log(room, users);
-    //     });
-    //     socket.on('message', (message) => {
-    //         console.log(message);
-    //     })
+    socket.emit('joinRoom', { userId, roomId });
+        socket.on('roomUsers', ({ roomId, users }) => {
+        console.log(roomId, users);
+        });
+        socket.on('message', (message) => {
+            console.log(message);
+        })
       })
 
   useEffect(() => {

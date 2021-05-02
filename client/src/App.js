@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Routes>
         <PrivateRoute path="/home" element={<HomePage />} />
-        <Route path="/room" element={<RoomPage />} />
+        <Route path="/room/:roomId" element={<RoomPage />} />
         <Route path="/" element={<LandingPage />} />
       </Routes>
     </div>

@@ -34,7 +34,9 @@ app.get("/", (req, res) => {
 io.on("connection", (socket) => {
   console.log("connected");
   socket.on('joinRoom', ({ userId, roomId }) => {
+    
     const user = userJoin(userId, roomId);
+    console.log(user) // user = {userId, roomId}
 
     socket.join(user.roomId);
 
@@ -48,19 +50,19 @@ io.on("connection", (socket) => {
 
     // Send users and room info
     io.to(user.roomId).emit('roomUsers', {
-      room: user.room,
+      roomId: user.roomId,
       users: getRoomUsers(user.roomId)
     });
     
 
-    // socket.on('disconnect', () => {
-    //     const user = userLeave(socket.id);
-    
-    //     if (user) {
-    //       io.to(user.room).emit(
-    //         'message',
-    //          `${user.username} has left the chat`
-    //       );
+    socket.on('disconnect', () => {
+        const user = userLeave(userId);
+        console.log(user, "disconnected");
+        if (user) {
+          io.to(user.roomId).emit(
+            'message',
+             `${user.userId} has left the chat`
+          );}})
     
     //       // Send users and room info
     //       io.to(user.room).emit('roomUsers', {

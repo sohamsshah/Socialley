@@ -9,7 +9,10 @@ export function HomePage() {
 
   return (
     <div>
-      <Link exact to="/room">Room</Link>
+      <Link exact to="/room/1">Room 1</Link>
+      <Link exact to="/room/2">Room 2</Link>
+      <Link exact to="/room/3">Room 3</Link>
+      <Link exact to="/room/4">Room 4</Link>
       <h1>This is the home page</h1>
     </div>
   );
