@@ -40,18 +40,17 @@ export function RoomPage() {
   useEffect(() => {
     (async function () {
       try {
-        const { status, room } = await axios.get(
-          `http://localhost:8080/room/${roomId}`
-        );
-        console.log(room);
-        if (status === 2000) {
+        const {
+          data: { room },
+          status,
+        } = await axios.get(`http://localhost:8080/room/${roomId}`);
+        if (status === 200) {
           roomDispatch({ type: "ADD_ROOM", payload: room });
         }
       } catch (error) {
         console.log({ error });
       }
     })();
-
     socket.on("message", ({ message }) => {
       console.log(message);
       roomDispatch({ type: "ADD_MESSAGE", payload: message });
