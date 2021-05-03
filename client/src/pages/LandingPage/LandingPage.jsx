@@ -15,7 +15,7 @@ export const LandingPage = () => {
       (async () => {
         try {
           const response = await axios.post(
-            "http://localhost:8080/user",
+            "https://socialley.sohamsshah.repl.co/user",
             {
               newUser: {
                 email: user.email,
