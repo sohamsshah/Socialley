@@ -15,6 +15,7 @@ const UserSchema = new Schema(
       required: [true, "Username is required"],
       unique: true,
     },
+    isPresent: Boolean,
     email: {
       type: String,
       required: [true, "User Email Id required"],

@@ -16,12 +16,31 @@ router.route("/").post(async (req, res) => {
   try {
     const { newUser } = req.body;
     const user = await findUserByEmail(newUser.email);
+    console.log(user);
+    const populatedUser = await user
+      .populate({
+        path: "savedchats.chatId",
+        select: "topic moderators participants savedTime chat",
+      })
+      .execPopulate();
+    console.log(populatedUser);
     if (user) {
-      res.status(200).json({ user });
+      res
+        .status(200)
+        .json({ user: { ...user._doc, savedchats: populatedUser._doc } });
     } else {
-      const newUserFromDB = new User({ ...newUser, bio: "" });
+      const newUserFromDB = new User(newUser);
       const savedUser = await newUserFromDB.save();
-      res.status(200).json({ user: savedUser });
+      const populatedUser = await savedUser
+        .populate({
+          path: "savedchats.chatId",
+          select: "topic moderators participants savedTime chat",
+        })
+        .execPopulate();
+      console.log(populatedUser);
+      res
+        .status(200)
+        .json({ user: { ...savedUser._doc, savedchats: populatedUser._doc } });
     }
   } catch (error) {
     res.status(400).json({ message: "Unable to register the user" });
@@ -48,7 +67,7 @@ router
     res.status(200).json({ user: user });
   })
   .post(async (req, res) => {
-    const profileUpdates = req.body;
+    const {profileUpdates} = req.body;
     let { user } = req;
 
     user = extend(user, profileUpdates);

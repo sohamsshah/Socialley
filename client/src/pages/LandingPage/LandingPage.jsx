@@ -3,24 +3,34 @@ import LandingPageBanner from "./landing-page.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUser } from "../../context/UserProvider";
 
 export const LandingPage = () => {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
   const navigate = useNavigate();
-
-  console.log(user);
+  const { userDispatch } = useUser();
 
   useEffect(() => {
     if (isAuthenticated) {
       (async () => {
-        const response = await axios.post("http://localhost:8080/user", {
-          newUser: {
-            email: user.email,
-            username: user.nickname,
-            profilePic: user.picture,
-          },
-        });
-        console.log(response);
+        try {
+          const response = await axios.post(
+            "https://socialley.sohamsshah.repl.co/user",
+            {
+              newUser: {
+                email: user.email,
+                username: user.nickname,
+                profilePic: user.picture,
+                bio: "Hello World! I love Socialley💻❤",
+              },
+            }
+          );
+          const userFromApi = response.data.user;
+          userDispatch({ type: "ADD_USER", payload: userFromApi });
+          localStorage.setItem("userId", JSON.stringify(userFromApi._id));
+        } catch (error) {
+          console.log(error);
+        }
       })();
       navigate("/home");
     }
@@ -39,7 +49,7 @@ export const LandingPage = () => {
         </div>
         <div className="flex flex-col items-center lg:w-full justify-center lg:mb-48 lg:mr-40">
           <h2 className="text-center my-8 text-5xl font-bold md:font-bold">
-            A Valley for Socials
+            A Discussion Alley for smart socializing.
           </h2>
           <button
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded text-2xl"

@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const RoomSchema = new Schema(
+const RoomsSchema = new Schema(
   {
     createdAt: Number,
     updatedAt: Number,
     topic: {
       type: String,
       required: [true, "Topic is required"],
-      unique: true,
     },
     description: {
       type: String,
@@ -24,27 +23,17 @@ const RoomSchema = new Schema(
     isSaved: Boolean,
     savedTime: Date,
     canRaiseHand: Boolean,
-    moderators: [
-      {
-        userId: { type: Schema.Types.ObjectId, ref: "User" },
-        isPresent: Boolean,
-      },
-    ],
-    participants: [
-      {
-        userId: { type: Schema.Types.ObjectId, ref: "User" },
-        isPresent: Boolean,
-      },
-    ],
-    stage: [{ userId: { type: Schema.Types.ObjectId, ref: "User" } }],
-    raisedHand: [{ userId: { type: Schema.Types.ObjectId, ref: "User" } }],
-    chat: [{ chatId: { type: Schema.Types.ObjectId, ref: "Chat" } }],
+    moderators: Array,
+    participants: Array,
+    stage: Array,
+    raisedHand: Array,
+    chat: Array,
   },
   {
     timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
   }
 );
 
-const Room = mongoose.model("Room", RoomSchema);
+const Room = mongoose.model("Room", RoomsSchema);
 
 module.exports = { Room };
