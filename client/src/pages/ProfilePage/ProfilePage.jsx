@@ -4,16 +4,19 @@ import axios from "axios";
 import RoomCard from "./../../components/RoomCard/RoomCard"
 import {useUser} from"./../../context/UserProvider"
 import {useParams, useNavigate} from "react-router-dom"
+import { useAuth0 } from "@auth0/auth0-react";
+
 import {
     BackArrowSvg, CloseButtonSvg
   } from "../../assets/Svg";
   
 
 export function ProfilePage() {
+  const { logout } = useAuth0();
     const [fetchedUser, setFetchedUser] = useState({});
     const [userData, setUserData] = useState({})
     const { userId } = useParams();
-    const {userState:{_id, profilePic}} = useUser();
+    const {userState:{_id, profilePic}, userDispatch} = useUser();
     const isUserProfile = _id === userId;
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
@@ -28,12 +31,23 @@ export function ProfilePage() {
       setShowModal(false);
     };
 
+    const logoutFromEverywhere = () => {
+      logout()
+      localStorage?.removeItem("userId")
+    } 
+
     const editData = async () => {
-      setFetchedUser(userData);
+      // setFetchedUser(userData);
       try {
-        const {
-          data: { room },
-        } = await axios.post("https://socialley.sohamsshah.repl.co/user", {});
+        const {data: {user}, status} = await axios.post(`https://socialley.sohamsshah.repl.co/user/${_id}`, {
+          profileUpdates: userData
+        });
+        if(status === 200){
+          setFetchedUser(user);
+          setUserData(user);
+          userDispatch({type:"UPDATE_USER", payload: user});
+        }
+        
       } catch (error) {
         console.log({ error });
       }
@@ -62,8 +76,12 @@ export function ProfilePage() {
           <span className={styles["profile-title"]}>Socailley 💬</span>
           </div>
           <div className={styles["header-rhs"]}>
-            <img className={styles["profile-pic"]} src={profilePic} alt="avatar profile"></img>
+          <div className={styles["logout"]}>
+            <button onClick={logoutFromEverywhere}>Logout</button>
           </div>
+          <img className={styles["profile-pic"]} src={profilePic} alt="avatar profile"></img>
+          </div>
+
       </div>
       <div className={styles["profile-details"]}>
           <div className={styles["profile-details-banner"]}>

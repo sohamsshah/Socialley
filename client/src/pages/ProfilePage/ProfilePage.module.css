@@ -26,6 +26,15 @@
     display: flex;
     float: right;
   }
+
+  .logout button{
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.4em 1em;
+    border-radius: 0.5em;
+    font-size: 1.2rem;
+    margin-right:1em;
+  }
   
   .profile-title {
     padding-left: 1em;

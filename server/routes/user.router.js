@@ -58,7 +58,7 @@ router
     res.status(200).json({ user: user });
   })
   .post(async (req, res) => {
-    const profileUpdates = req.body;
+    const {profileUpdates} = req.body;
     let { user } = req;
 
     user = extend(user, profileUpdates);
