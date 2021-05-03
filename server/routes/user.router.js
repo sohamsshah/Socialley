@@ -31,7 +31,16 @@ router.route("/").post(async (req, res) => {
     } else {
       const newUserFromDB = new User(newUser);
       const savedUser = await newUserFromDB.save();
-      res.status(200).json({ user: savedUser });
+      const populatedUser = await savedUser
+        .populate({
+          path: "savedchats.chatId",
+          select: "topic moderators participants savedTime chat",
+        })
+        .execPopulate();
+      console.log(populatedUser);
+      res
+        .status(200)
+        .json({ user: { ...savedUser._doc, savedchats: populatedUser._doc } });
     }
   } catch (error) {
     res.status(400).json({ message: "Unable to register the user" });
