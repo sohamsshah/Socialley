@@ -18,7 +18,7 @@ password: Demo@1234
 
 # Tech Stack
 
-MERN + socket.io + Tailwind and Vanilla CSS
+MERN + socket.io + Auth0 + Tailwind and Vanilla CSS
 
 ## Development Guide
 
