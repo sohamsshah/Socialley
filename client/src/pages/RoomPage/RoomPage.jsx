@@ -40,7 +40,7 @@ export function RoomPage() {
     }
   }, [text]);
 
-  const hasParticipant = roomState.participants.some(
+  const hasParticipant = roomState.participants?.some(
     (item) => item._id === userState._id
   );
   console.log(hasParticipant);
@@ -124,23 +124,21 @@ export function RoomPage() {
     }
   }
 
-  const mod = roomState.moderators.some((item) => item._id === userState._id);
-
-  const participant = roomState.participants.some(
+  const mod = roomState.moderators?.some((item) => item._id === userState._id);
+  const participant = roomState.participants?.some(
     (item) => item._id === userState._id
   );
 
-  const userInStage = roomState.stage.some(
+  const userInStage = roomState.stage?.some(
     (item) => item._id === userState._id
   );
 
-  const hasRaisedHand = roomState.raisedHand.some(
+  const hasRaisedHand = roomState.raisedHand?.some(
     (item) => item._id === userState._id
   );
 
   async function raiseHand() {
-    console.log("here");
-    if (participant || hasRaisedHand) {
+    if ((participant || hasRaisedHand) && !mod) {
       try {
         const newParticipants = roomState.participants.filter(
           (user) => user._id !== userState._id
@@ -167,12 +165,11 @@ export function RoomPage() {
             },
           }
         );
-        console.log("here");
         socket.emit("raiseHand", { room });
       } catch (error) {
         console.log({ error });
       }
-    } else if (mod && roomState.raisedHand.length) {
+    } else if (mod) {
       setShowRaisedHand(!showRaisedHand);
     }
   }
@@ -201,8 +198,10 @@ export function RoomPage() {
           ) : (
             <button className={styles["btn-raise-hand"]} onClick={raiseHand}>
               <RaiseHandSvg />
-              {mod && roomState.raisedHand ? (
-                <span className={styles["badge-raise-hand"]}>6</span>
+              {mod && roomState.raisedHand.length ? (
+                <span className={styles["badge-raise-hand"]}>
+                  {roomState.raisedHand.length}
+                </span>
               ) : (
                 <div></div>
               )}
