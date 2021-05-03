@@ -2,6 +2,14 @@
 
 A Discussion Alley for smart socializing.
 
+
+<img src="https://user-images.githubusercontent.com/57338980/116833363-53126e80-abd6-11eb-89e8-6b04ec1ba7d1.png" height="400">
+<img src="https://user-images.githubusercontent.com/57338980/116833371-5c034000-abd6-11eb-9749-633f3c274ffa.png" height="400">
+<img src="https://user-images.githubusercontent.com/57338980/116833375-60c7f400-abd6-11eb-806a-9128ff991dda.png" height="400">
+<img src="https://user-images.githubusercontent.com/57338980/116833376-632a4e00-abd6-11eb-87e6-9ba4414a5d10.png" height="400">
+<img src="https://user-images.githubusercontent.com/57338980/116833383-658ca800-abd6-11eb-805e-f94857520f27.png" height="400">
+<img src="https://user-images.githubusercontent.com/57338980/116833387-67566b80-abd6-11eb-9657-02aefa779e92.png" height="400">
+
 ## LIVE SITE: https://socialley.netlify.app/
 
 ## Development Guide
