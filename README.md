@@ -11,6 +11,10 @@ A Discussion Alley for smart socializing.
 <img src="https://user-images.githubusercontent.com/57338980/116833387-67566b80-abd6-11eb-9657-02aefa779e92.png" height="400">
 
 ## LIVE SITE: https://socialley.netlify.app/
+Demo Credentials: 
+
+email: demo@gmail.com, 
+password: Demo@1234
 
 ## Development Guide
 
@@ -40,7 +44,7 @@ MONGODB_URI = "create-your-own-mongo-db-uri"
 
 For client side, create a .env file in the `/client` folder of the repository and add:
 ```
-REACT_APP_AUTH0_DOMAIN=socialley.jp.auth0.com
+REACT_APP_AUTH0_DOMAIN="create-your-own-domain-on-auth0"
 REACT_APP_AUTH0_CLIENT_ID="create-your-own-client-on-auth0"
 ```
 
