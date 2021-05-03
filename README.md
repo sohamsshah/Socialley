@@ -16,6 +16,10 @@ Demo Credentials:
 email: demo@gmail.com, 
 password: Demo@1234
 
+# Tech Stack
+
+MERN + socket.io + Tailwind and Vanilla CSS
+
 ## Development Guide
 
 ### Spinning up local dev setup
